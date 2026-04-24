@@ -1,8 +1,10 @@
-// Test data and scoring logic for VIP Sales Manager assessment
+// Test data for VIP Sales Manager assessment
+// Single profile: "Service VIP" - measured as percentage (0-100%)
+// Business terminology embedded in answer options
+// Questions are disguised to not reveal what's being measured
 
 export interface Question {
   id: string;
-  type: "situational" | "psychological";
   text: string;
   options: Option[];
 }
@@ -10,526 +12,356 @@ export interface Question {
 export interface Option {
   id: string;
   text: string;
-  scores: {
-    locomotive: number;
-    serviceVip: number;
-    mamasBasket: number;
-  };
+  score: number; // 0-5 points for Service VIP profile
 }
 
 export interface TestResult {
-  locomotive: number;
-  serviceVip: number;
-  mamasBasket: number;
-  locomotivePercent: number;
-  serviceVipPercent: number;
-  mamasBasketPercent: number;
-  primaryProfile: string;
-  secondaryProfile: string;
+  percentage: number;
+  isPassed: boolean; // true if >= 70%
   recommendation: string;
 }
 
 export const questions: Question[] = [
-  // Situational questions
+  // Situational question 1
   {
-    id: "sit1",
-    type: "situational",
+    id: "q1",
     text: "Ви здійснюєте холодний дзвінок потенційному VIP-клієнту. Після вашого привітання клієнт відповідає: «Слухаю, але в мене мало часу». Як ви продовжите розмову?",
     options: [
       {
-        id: "sit1_a",
-        text: "«Розумію, тому скажу коротко: я звернувся, бо бачу можливість для вашої компанії оптимізувати [конкретна зона]. Якщо це неактуально — скажете одразу.»",
-        scores: { locomotive: 2, serviceVip: 1, mamasBasket: 0 },
+        id: "q1_a",
+        text: "«Розумію, тому скажу коротко: я звернувся, бо бачу можливість для оптимізації вашого операційного циклу. Якщо це неактуально — скажете одразу.»",
+        score: 2,
       },
       {
-        id: "sit1_b",
-        text: "«Розумію. Тоді скажіть, будь ласка, чи актуальне для вас зараз питання [конкретна проблема], щоб я не забирав ваш час даремно?»",
-        scores: { locomotive: 1, serviceVip: 2, mamasBasket: 0 },
+        id: "q1_b",
+        text: "«Розумію. Тоді скажіть, будь ласка, чи актуальне для вас зараз питання підвищення ефективності, щоб я не забирав ваш час даремно?»",
+        score: 4,
       },
       {
-        id: "sit1_c",
-        text: "«Я ознайомився з вашим бізнесом і бачу, що ви розвиваєте [напрям]. Є рішення, яке вже дало результат у подібних компаніях. Можу коротко пояснити, в чому суть.»",
-        scores: { locomotive: 2, serviceVip: 1, mamasBasket: 0 },
+        id: "q1_c",
+        text: "«Я ознайомився з вашим бізнесом і бачу можливість для масштабування вашої діяльності. Є рішення, яке вже дало результат у подібних компаніях. Можу коротко пояснити.»",
+        score: 3,
       },
       {
-        id: "sit1_d",
-        text: "«Щоб не навантажувати вас зараз, можу сформулювати коротку ідею в 2–3 рядках і надіслати. Якщо буде цікаво — продовжимо.»",
-        scores: { locomotive: 0, serviceVip: 2, mamasBasket: 0 },
+        id: "q1_d",
+        text: "«Щоб не навантажувати вас зараз, можу сформулювати коротку ідею в 2–3 рядках і надіслати. Якщо буде цікаво — продовжимо діалог.»",
+        score: 5,
       },
       {
-        id: "sit1_e",
-        text: "«Тоді давайте домовимось так: я підготую конкретну пропозицію під вашу ситуацію і повернусь у зручний для вас час. Коли краще?»",
-        scores: { locomotive: 0, serviceVip: 2, mamasBasket: 0 },
-      },
-    ],
-  },
-  {
-    id: "sit2",
-    type: "situational",
-    text: "Клієнт після короткого вступу каже: «Дякую, але нам зараз нічого не потрібно». Яка ваша наступна реакція?",
-    options: [
-      {
-        id: "sit2_a",
-        text: "«Розумію, більшість компаній так відповідають на першому етапі. Саме тому коротко скажу: ми допомагаємо [конкретна цінність], і часто це стає актуальним раніше, ніж очікується. Чи правильно я розумію, що зараз для вас не пріоритет — чи вже є рішення?»",
-        scores: { locomotive: 2, serviceVip: 1, mamasBasket: 0 },
-      },
-      {
-        id: "sit2_b",
-        text: "«Розумію вас. Скажіть, будь ласка, а що для вас зараз є пріоритетним напрямком? Можливо, я зможу бути корисним у майбутньому.»",
-        scores: { locomotive: 0, serviceVip: 2, mamasBasket: 1 },
-      },
-      {
-        id: "sit2_c",
-        text: "«Дякую за відповідь. Підкажіть, будь ласка, коли буде доречно повернутися до цього питання? Я підготую більш релевантну пропозицію.»",
-        scores: { locomotive: 0, serviceVip: 2, mamasBasket: 1 },
-      },
-      {
-        id: "sit2_d",
-        text: "«Розумію. Саме тому я і звертаюсь — часто компанії не бачать потреби, поки не стикаються з [конкретний ризик або втрата]. Ми якраз допомагаємо це попередити. Чи було у вас щось подібне?»",
-        scores: { locomotive: 2, serviceVip: 1, mamasBasket: 0 },
-      },
-      {
-        id: "sit2_e",
-        text: "«Розумію вас. Тоді давайте зробимо так: я надішлю вам коротке повідомлення з одним кейсом, де ми вирішили [конкретну проблему]. Збережіть мій номер як \"[тип проблеми]\" — щоб, якщо це стане актуальним, ви могли швидко мене знайти. Домовились?»",
-        scores: { locomotive: 1, serviceVip: 2, mamasBasket: 0 },
-      },
-    ],
-  },
-  {
-    id: "sit3",
-    type: "situational",
-    text: "Клієнт каже: «Це дорого для нас». Як ви відповідаєте?",
-    options: [
-      {
-        id: "sit3_a",
-        text: "«Розумію, тоді давайте подивимось, що ми можемо оптимізувати або зменшити в обсязі, щоб вам було комфортніше по бюджету.»",
-        scores: { locomotive: 0, serviceVip: 1, mamasBasket: 1 },
-      },
-      {
-        id: "sit3_b",
-        text: "«Насправді ціна повністю виправдана, тому що у нас найкраща якість, сервіс, досвід на ринку і ми вже працювали з багатьма клієнтами вашого рівня…»",
-        scores: { locomotive: 1, serviceVip: 0, mamasBasket: 1 },
-      },
-      {
-        id: "sit3_c",
-        text: "«Розумію. Давайте тоді порахуємо: якщо це рішення дає вам [результат], то за який період воно окупиться?»",
-        scores: { locomotive: 2, serviceVip: 1, mamasBasket: 0 },
-      },
-      {
-        id: "sit3_d",
-        text: "«Коли ви кажете \"дорого\", мені важливо зрозуміти — це про бюджет чи про відчуття, що цінність не відповідає? Скажіть прямо, будь ласка.»",
-        scores: { locomotive: 2, serviceVip: 2, mamasBasket: 0 },
-      },
-      {
-        id: "sit3_e",
-        text: "«Зрозумів вас. Скажіть, будь ласка, що саме для вас зараз виглядає дорогим — сам формат рішення, обсяг чи результат, який ви очікуєте?»",
-        scores: { locomotive: 2, serviceVip: 2, mamasBasket: 0 },
-      },
-    ],
-  },
-  {
-    id: "sit4",
-    type: "situational",
-    text: "VIP-клієнт звертається до вас із терміновим запитом і просить виконати задачу швидше, ніж це реально можливо без втрати якості. Як ви будете діяти?",
-    options: [
-      {
-        id: "sit4_a",
-        text: "«Так, звичайно, зробимо максимально швидко. Я передам команді, і ми постараємось вкластися у ваші терміни.»",
-        scores: { locomotive: 0, serviceVip: 1, mamasBasket: 2 },
-      },
-      {
-        id: "sit4_b",
-        text: "«На жаль, це неможливо в такі строки. У нас є встановлені процеси, і ми їх не порушуємо.»",
-        scores: { locomotive: 1, serviceVip: 0, mamasBasket: 2 },
-      },
-      {
-        id: "sit4_c",
-        text: "«Давайте подивимось, що саме для вас критично. Ми можемо пришвидшити частину процесу або змінити обсяг, щоб ви отримали результат швидше.»",
-        scores: { locomotive: 2, serviceVip: 2, mamasBasket: 0 },
-      },
-      {
-        id: "sit4_d",
-        text: "«Я розумію, що для вас це терміново. Я уточню всередині команди, де ми можемо прискоритись без втрати якості, і повернусь до вас із конкретними варіантами сьогодні.»",
-        scores: { locomotive: 1, serviceVip: 2, mamasBasket: 0 },
-      },
-      {
-        id: "sit4_e",
-        text: "«Я скажу вам прямо: у ці строки зробити без втрати якості не вийде. Але я можу запропонувати варіанти — або ми залишаємо якість і трохи рухаємо термін, або робимо швидше, але з обмеженим обсягом. Давайте оберемо, що для вас зараз важливіше.»",
-        scores: { locomotive: 2, serviceVip: 2, mamasBasket: 0 },
-      },
-    ],
-  },
-  {
-    id: "sit5",
-    type: "situational",
-    text: "Після угоди або відмови VIP-клієнт \"в системі\", і менеджер має підтримувати контакт. Як ви будете діяти?",
-    options: [
-      {
-        id: "sit5_a",
-        text: "Я фіксую клієнта в системі супроводу і планую регулярні точки контакту: перевірка результату, зворотний зв'язок, оновлення можливостей.",
-        scores: { locomotive: 1, serviceVip: 2, mamasBasket: 0 },
-      },
-      {
-        id: "sit5_b",
-        text: "Я виходжу на контакт не з продажем, а з уточненням: як змінився результат після впровадження рішення і чи є нові задачі.",
-        scores: { locomotive: 1, serviceVip: 2, mamasBasket: 0 },
-      },
-      {
-        id: "sit5_c",
-        text: "Я відстежую зміни в бізнесі клієнта і виходжу на контакт тоді, коли бачу потенційну нову потребу або ризик.",
-        scores: { locomotive: 2, serviceVip: 1, mamasBasket: 0 },
-      },
-      {
-        id: "sit5_d",
-        text: "Я підтримую ненав'язливий контакт: короткі оновлення, корисна інформація, інсайти по ринку без прямого продажу.",
-        scores: { locomotive: 0, serviceVip: 2, mamasBasket: 0 },
-      },
-      {
-        id: "sit5_e",
-        text: "Я повертаюсь до клієнта у ключові моменти: після впровадження, при оновленнях продукту або при появі нових рішень, які можуть вплинути на його бізнес.",
-        scores: { locomotive: 2, serviceVip: 1, mamasBasket: 0 },
+        id: "q1_e",
+        text: "«Тоді давайте домовимось так: я підготую конкретну пропозицію під вашу ситуацію та ROI-прогноз, і повернусь у зручний для вас час. Коли краще?»",
+        score: 5,
       },
     ],
   },
 
-  // Psychological questions (scale 1-5)
+  // Situational question 2
   {
-    id: "psy1",
-    type: "psychological",
-    text: "Я вважаю, що успіх у роботі залежить насамперед від моїх власних зусиль та рішень.",
+    id: "q2",
+    text: "Клієнт після короткого вступу каже: «Дякую, але нам зараз нічого не потрібно». Яка ваша наступна реакція?",
     options: [
       {
-        id: "psy1_1",
-        text: "Зовсім не про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 2 },
+        id: "q2_a",
+        text: "«Розумію, більшість компаній так відповідають на першому контакті. Саме тому коротко скажу: ми допомагаємо оптимізувати витрати, і часто це стає актуальним раніше, ніж очікується. Чи правильно я розумію, що зараз для вас не пріоритет — чи вже є рішення?»",
+        score: 3,
       },
       {
-        id: "psy1_2",
-        text: "Скоріше не про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 1 },
+        id: "q2_b",
+        text: "«Розумію вас. Скажіть, будь ласка, а які метрики вас цікавлять найбільше? Можливо, я зможу бути корисним у майбутньому.»",
+        score: 4,
       },
       {
-        id: "psy1_3",
-        text: "Іноді так, іноді ні",
-        scores: { locomotive: 1, serviceVip: 1, mamasBasket: 0 },
+        id: "q2_c",
+        text: "«Дякую за відповідь. Підкажіть, будь ласка, коли буде доречно повернутися до цього питання? Я підготую більш релевантну пропозицію, адаптовану під вашу специфіку.»",
+        score: 5,
       },
       {
-        id: "psy1_4",
-        text: "Часто про мене",
-        scores: { locomotive: 2, serviceVip: 0, mamasBasket: 0 },
+        id: "q2_d",
+        text: "«Розумію. Саме тому я і звертаюсь — часто компанії не бачать потреби, поки не стикаються з ризиком. Ми якраз допомагаємо це попередити. Чи було у вас щось подібне?»",
+        score: 2,
       },
       {
-        id: "psy1_5",
-        text: "Це точно про мене",
-        scores: { locomotive: 3, serviceVip: 0, mamasBasket: 0 },
+        id: "q2_e",
+        text: "«Розумію вас. Тоді давайте зробимо так: я надішлю вам кейс-стаді з аналітикою результатів. Збережіть мій контакт — щоб, якщо це стане актуальним, ви могли швидко мене знайти. Домовились?»",
+        score: 5,
       },
     ],
   },
+
+  // Situational question 3
   {
-    id: "psy2",
-    type: "psychological",
-    text: "Мені комфортно працювати за чітко визначеними правилами та інструкціями.",
+    id: "q3",
+    text: "Клієнт каже: «Це дорого для нас». Як ви відповідаєте?",
     options: [
       {
-        id: "psy2_1",
-        text: "Зовсім не про мене",
-        scores: { locomotive: 2, serviceVip: 0, mamasBasket: 0 },
+        id: "q3_a",
+        text: "«Розумію, тоді давайте подивимось, що ми можемо оптимізувати в обсязі, щоб вам було комфортніше по бюджету.»",
+        score: 1,
       },
       {
-        id: "psy2_2",
-        text: "Скоріше не про мене",
-        scores: { locomotive: 1, serviceVip: 0, mamasBasket: 0 },
+        id: "q3_b",
+        text: "«Насправді ціна повністю виправдана, тому що у нас найкраща якість, сервіс, досвід на ринку…»",
+        score: 0,
       },
       {
-        id: "psy2_3",
-        text: "Іноді так, іноді ні",
-        scores: { locomotive: 1, serviceVip: 1, mamasBasket: 0 },
+        id: "q3_c",
+        text: "«Розумію. Давайте тоді порахуємо: якщо це рішення дає вам [конкретний результат], то за який період воно окупиться і яким буде ваш ROI?»",
+        score: 5,
       },
       {
-        id: "psy2_4",
-        text: "Часто про мене",
-        scores: { locomotive: 0, serviceVip: 2, mamasBasket: 0 },
+        id: "q3_d",
+        text: "«Коли ви кажете \"дорого\", мені важливо розрізнити: це про бюджетні обмеження чи про сприйняття вартості пропозиції? Скажіть прямо, будь ласка.»",
+        score: 4,
       },
       {
-        id: "psy2_5",
-        text: "Це точно про мене",
-        scores: { locomotive: 0, serviceVip: 3, mamasBasket: 0 },
+        id: "q3_e",
+        text: "«Зрозумів вас. Скажіть, будь ласка, яка сума вам видається прийнятною, і ми адаптуємо пакет послуг під вашу цінову стратегію.»",
+        score: 3,
       },
     ],
   },
+
+  // Situational question 4
   {
-    id: "psy3",
-    type: "psychological",
-    text: "Я легко адаптуюся до нових обставин і швидко знаходжу рішення у непередбачуваних ситуаціях.",
+    id: "q4",
+    text: "VIP-клієнт звертається до вас із терміновим запитом і просить виконати задачу швидше, ніж це реально можливо без втрати якості. Як ви будете діяти?",
     options: [
       {
-        id: "psy3_1",
-        text: "Зовсім не про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 2 },
+        id: "q4_a",
+        text: "«Так, звичайно, зробимо максимально швидко. Я передам команді, і ми постараємось вкластися у ваші терміни.»",
+        score: 1,
       },
       {
-        id: "psy3_2",
-        text: "Скоріше не про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 1 },
+        id: "q4_b",
+        text: "«На жаль, це неможливо в такі строки. У нас є встановлені процеси, і ми їх не порушуємо.»",
+        score: 0,
       },
       {
-        id: "psy3_3",
-        text: "Іноді так, іноді ні",
-        scores: { locomotive: 1, serviceVip: 1, mamasBasket: 0 },
+        id: "q4_c",
+        text: "«Давайте подивимось, що саме для вас критично. Ми можемо пришвидшити частину процесу або змінити scope, щоб ви отримали результат швидше без компромісу якості.»",
+        score: 4,
       },
       {
-        id: "psy3_4",
-        text: "Часто про мене",
-        scores: { locomotive: 2, serviceVip: 0, mamasBasket: 0 },
+        id: "q4_d",
+        text: "«Я розумію критичність для вас. Я уточню всередині команди, де ми можемо прискоритись без втрати якості, і повернусь до вас із конкретними варіантами сьогодні.»",
+        score: 4,
       },
       {
-        id: "psy3_5",
-        text: "Це точно про мене",
-        scores: { locomotive: 3, serviceVip: 0, mamasBasket: 0 },
+        id: "q4_e",
+        text: "«Я скажу вам прямо: у ці строки забезпечити якість без компромісів неможливо. Але я можу запропонувати сценарії: або ми залишаємо якість і коригуємо термін, або робимо швидше, але з обмеженим scope. Давайте оберемо, що для вашої бізнес-стратегії зараз пріоритетніше.»",
+        score: 5,
       },
     ],
   },
+
+  // Situational question 5
   {
-    id: "psy4",
-    type: "psychological",
-    text: "Коли виникають труднощі, я схильний шукати причини у зовнішніх обставинах, а не у власних діях.",
+    id: "q5",
+    text: "Після угоди клієнт «в системі». Як ви будете підтримувати партнерські стосунки?",
     options: [
       {
-        id: "psy4_1",
-        text: "Зовсім не про мене",
-        scores: { locomotive: 2, serviceVip: 0, mamasBasket: 0 },
+        id: "q5_a",
+        text: "Я фіксую клієнта в системі супроводу і планую регулярні точки контакту: перевірка результату, зворотний зв'язок, інформування про оновлення.",
+        score: 3,
       },
       {
-        id: "psy4_2",
-        text: "Скоріше не про мене",
-        scores: { locomotive: 1, serviceVip: 0, mamasBasket: 0 },
+        id: "q5_b",
+        text: "Я виходжу на контакт не з метою продажу, а з уточненням: як змінилися його KPI після впровадження рішення і чи виникли нові виклики.",
+        score: 5,
       },
       {
-        id: "psy4_3",
-        text: "Іноді так, іноді ні",
-        scores: { locomotive: 0, serviceVip: 1, mamasBasket: 1 },
+        id: "q5_c",
+        text: "Я відстежую зміни в його бізнес-середовищі та ринку, і виходжу на контакт тоді, коли бачу потенційну нову потребу або ризик для його операцій.",
+        score: 4,
       },
       {
-        id: "psy4_4",
-        text: "Часто про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 2 },
+        id: "q5_d",
+        text: "Я підтримую ненав'язливий контакт: короткі інсайти по ринку, корисна інформація, релевантні статті без прямого продажу.",
+        score: 3,
       },
       {
-        id: "psy4_5",
-        text: "Це точно про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 3 },
+        id: "q5_e",
+        text: "Я повертаюсь до клієнта у ключові моменти: після впровадження (для валідації результатів), при оновленнях продукту або при появі нових рішень, які можуть вплинути на його бізнес-модель.",
+        score: 5,
       },
     ],
   },
+
+  // Psychological question 1 (disguised)
   {
-    id: "psy5",
-    type: "psychological",
-    text: "Я завжди прагну доводити розпочату справу до кінця, приділяючи увагу навіть дрібним деталям.",
+    id: "q6",
+    text: "Коли я спілкуюсь з клієнтом про його виклики, я намагаюсь розуміти не тільки його проблему, але й контекст його бізнесу.",
     options: [
       {
-        id: "psy5_1",
-        text: "Зовсім не про мене",
-        scores: { locomotive: 2, serviceVip: 0, mamasBasket: 0 },
+        id: "q6_1",
+        text: "Це не про мене — я зосереджуюсь на тому, що клієнт мені розповідає",
+        score: 0,
       },
       {
-        id: "psy5_2",
-        text: "Скоріше не про мене",
-        scores: { locomotive: 1, serviceVip: 0, mamasBasket: 0 },
+        id: "q6_2",
+        text: "Скоріше не про мене — я розповідаю про наше рішення",
+        score: 1,
       },
       {
-        id: "psy5_3",
-        text: "Іноді так, іноді ні",
-        scores: { locomotive: 1, serviceVip: 1, mamasBasket: 0 },
+        id: "q6_3",
+        text: "Іноді я питаю про контекст, іноді просто пропоную рішення",
+        score: 2,
       },
       {
-        id: "psy5_4",
-        text: "Часто про мене",
-        scores: { locomotive: 0, serviceVip: 2, mamasBasket: 0 },
+        id: "q6_4",
+        text: "Часто я глибше розбираюсь в його бізнес-моделі та метриках перед тим, як пропонувати рішення",
+        score: 4,
       },
       {
-        id: "psy5_5",
-        text: "Це точно про мене",
-        scores: { locomotive: 0, serviceVip: 3, mamasBasket: 0 },
+        id: "q6_5",
+        text: "Це точно про мене — я завжди аналізую його операційні процеси, KPI та стратегічні цілі перед тим, як розробляти пропозицію",
+        score: 5,
       },
     ],
   },
+
+  // Psychological question 2 (disguised)
   {
-    id: "psy6",
-    type: "psychological",
-    text: "Я спокійно сприймаю критику і використовую її для покращення своєї роботи.",
+    id: "q7",
+    text: "Коли клієнт висловлює незгоду з моєю пропозицією, я розглядаю це як можливість краще зрозуміти його потреби.",
     options: [
       {
-        id: "psy6_1",
-        text: "Зовсім не про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 2 },
+        id: "q7_1",
+        text: "Зовсім не про мене — це означає, що він не розуміє цінність",
+        score: 0,
       },
       {
-        id: "psy6_2",
-        text: "Скоріше не про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 1 },
+        id: "q7_2",
+        text: "Скоріше не про мене — я просто пояснюю, чому моя пропозиція правильна",
+        score: 1,
       },
       {
-        id: "psy6_3",
-        text: "Іноді так, іноді ні",
-        scores: { locomotive: 1, serviceVip: 1, mamasBasket: 0 },
+        id: "q7_3",
+        text: "Іноді я слухаю його аргументи, іноді наполягаю на своєму",
+        score: 2,
       },
       {
-        id: "psy6_4",
-        text: "Часто про мене",
-        scores: { locomotive: 1, serviceVip: 1, mamasBasket: 0 },
+        id: "q7_4",
+        text: "Часто я питаю, які саме аспекти його не влаштовують, щоб переглянути пропозицію",
+        score: 4,
       },
       {
-        id: "psy6_5",
-        text: "Це точно про мене",
-        scores: { locomotive: 2, serviceVip: 2, mamasBasket: 0 },
+        id: "q7_5",
+        text: "Це точно про мене — я активно слухаю його заперечення, переглядаю свої припущення та адаптую рішення під його реальні потреби",
+        score: 5,
       },
     ],
   },
+
+  // Psychological question 3 (disguised)
   {
-    id: "psy7",
-    type: "psychological",
-    text: "Мені важливо отримати схвалення керівника перед тим, як впроваджувати нові підходи.",
+    id: "q8",
+    text: "Я вважаю, що мій успіх залежить від того, наскільки добре я розумію потреби клієнта.",
     options: [
       {
-        id: "psy7_1",
-        text: "Зовсім не про мене",
-        scores: { locomotive: 2, serviceVip: 0, mamasBasket: 0 },
+        id: "q8_1",
+        text: "Зовсім не про мене — успіх залежить від якості нашого продукту",
+        score: 0,
       },
       {
-        id: "psy7_2",
-        text: "Скоріше не про мене",
-        scores: { locomotive: 1, serviceVip: 0, mamasBasket: 0 },
+        id: "q8_2",
+        text: "Скоріше не про мене — успіх залежить від цени та умов",
+        score: 1,
       },
       {
-        id: "psy7_3",
-        text: "Іноді так, іноді ні",
-        scores: { locomotive: 0, serviceVip: 1, mamasBasket: 1 },
+        id: "q8_3",
+        text: "Іноді це важливо, іноді достатньо стандартного рішення",
+        score: 2,
       },
       {
-        id: "psy7_4",
-        text: "Часто про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 2 },
+        id: "q8_4",
+        text: "Часто я вкладаю час у дослідження потреб клієнта перед пропозицією",
+        score: 4,
       },
       {
-        id: "psy7_5",
-        text: "Це точно про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 3 },
+        id: "q8_5",
+        text: "Це точно про мене — я вкладаю значні зусилля в аналіз його бізнес-моделі, болів та цілей, щоб запропонувати максимально релевантне рішення",
+        score: 5,
       },
     ],
   },
+
+  // Psychological question 4 (disguised)
   {
-    id: "psy8",
-    type: "psychological",
-    text: "Я часто пропоную нові ідеї та шляхи вирішення проблем, навіть якщо це виходить за межі моїх прямих обов'язків.",
+    id: "q9",
+    text: "Коли я спілкуюсь з VIP-клієнтом, я використовую професійну бізнес-мову та терміни, які відповідають його рівню компетенції.",
     options: [
       {
-        id: "psy8_1",
-        text: "Зовсім не про мене",
-        scores: { locomotive: 0, serviceVip: 2, mamasBasket: 0 },
+        id: "q9_1",
+        text: "Зовсім не про мене — я розмовляю просто і зрозуміло",
+        score: 0,
       },
       {
-        id: "psy8_2",
-        text: "Скоріше не про мене",
-        scores: { locomotive: 0, serviceVip: 1, mamasBasket: 0 },
+        id: "q9_2",
+        text: "Скоріше не про мене — я намагаюсь спростити складні концепції",
+        score: 1,
       },
       {
-        id: "psy8_3",
-        text: "Іноді так, іноді ні",
-        scores: { locomotive: 1, serviceVip: 1, mamasBasket: 0 },
+        id: "q9_3",
+        text: "Іноді я використовую професійні терміни, іноді простіші слова",
+        score: 2,
       },
       {
-        id: "psy8_4",
-        text: "Часто про мене",
-        scores: { locomotive: 2, serviceVip: 0, mamasBasket: 0 },
+        id: "q9_4",
+        text: "Часто я адаптую мову під рівень клієнта та його індустрію",
+        score: 4,
       },
       {
-        id: "psy8_5",
-        text: "Це точно про мене",
-        scores: { locomotive: 3, serviceVip: 0, mamasBasket: 0 },
+        id: "q9_5",
+        text: "Це точно про мене — я вільно оперую термінами його індустрії (масштабування, ROI, оптимізація, метрики, KPI, операційна ефективність тощо) та розмовляю на його мові",
+        score: 5,
       },
     ],
   },
+
+  // Psychological question 5 (disguised)
   {
-    id: "psy9",
-    type: "psychological",
-    text: "Я вважаю, що більшість людей не здатні самостійно вирішувати складні питання без сторонньої допомоги.",
+    id: "q10",
+    text: "Я вважаю, що мій обов'язок — не тільки продати рішення, але й переконатись, що клієнт отримав очікуваний результат.",
     options: [
       {
-        id: "psy9_1",
-        text: "Зовсім не про мене",
-        scores: { locomotive: 2, serviceVip: 0, mamasBasket: 0 },
+        id: "q10_1",
+        text: "Зовсім не про мене — мій обов'язок закінчується після угоди",
+        score: 0,
       },
       {
-        id: "psy9_2",
-        text: "Скоріше не про мене",
-        scores: { locomotive: 1, serviceVip: 0, mamasBasket: 0 },
+        id: "q10_2",
+        text: "Скоріше не про мене — це обов'язок служби підтримки",
+        score: 1,
       },
       {
-        id: "psy9_3",
-        text: "Іноді так, іноді ні",
-        scores: { locomotive: 0, serviceVip: 1, mamasBasket: 1 },
+        id: "q10_3",
+        text: "Іноді я перевіряю результати, іноді ні",
+        score: 2,
       },
       {
-        id: "psy9_4",
-        text: "Часто про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 2 },
+        id: "q10_4",
+        text: "Часто я слідкую за впровадженням та результатами",
+        score: 4,
       },
       {
-        id: "psy9_5",
-        text: "Це точно про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 3 },
-      },
-    ],
-  },
-  {
-    id: "psy10",
-    type: "psychological",
-    text: "Я вмію ефективно керувати своїми емоціями, навіть у стресових ситуаціях з клієнтами.",
-    options: [
-      {
-        id: "psy10_1",
-        text: "Зовсім не про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 2 },
-      },
-      {
-        id: "psy10_2",
-        text: "Скоріше не про мене",
-        scores: { locomotive: 0, serviceVip: 0, mamasBasket: 1 },
-      },
-      {
-        id: "psy10_3",
-        text: "Іноді так, іноді ні",
-        scores: { locomotive: 1, serviceVip: 1, mamasBasket: 0 },
-      },
-      {
-        id: "psy10_4",
-        text: "Часто про мене",
-        scores: { locomotive: 1, serviceVip: 1, mamasBasket: 0 },
-      },
-      {
-        id: "psy10_5",
-        text: "Це точно про мене",
-        scores: { locomotive: 2, serviceVip: 2, mamasBasket: 0 },
+        id: "q10_5",
+        text: "Це точно про мене — я активно супроводжую клієнта після угоди, аналізую досягнуті результати, KPI та готовий адаптувати рішення, якщо потрібно",
+        score: 5,
       },
     ],
   },
 ];
 
-// Maximum possible scores
-const MAX_SCORES = {
-  locomotive: 29,
-  serviceVip: 29,
-  mamasBasket: 20,
-};
+const MAX_SCORE = questions.reduce((sum, q) => {
+  const maxOption = Math.max(...q.options.map((o) => o.score));
+  return sum + maxOption;
+}, 0);
 
 export function calculateResults(answers: Record<string, string>): TestResult {
-  const scores = {
-    locomotive: 0,
-    serviceVip: 0,
-    mamasBasket: 0,
-  };
+  let totalScore = 0;
 
-  // Calculate scores
+  // Calculate score
   for (const questionId in answers) {
     const selectedOptionId = answers[questionId];
     const question = questions.find((q) => q.id === questionId);
@@ -537,69 +369,30 @@ export function calculateResults(answers: Record<string, string>): TestResult {
     if (question) {
       const option = question.options.find((o) => o.id === selectedOptionId);
       if (option) {
-        scores.locomotive += option.scores.locomotive;
-        scores.serviceVip += option.scores.serviceVip;
-        scores.mamasBasket += option.scores.mamasBasket;
+        totalScore += option.score;
       }
     }
   }
 
-  // Calculate percentages
-  const locomotivePercent = Math.round(
-    (scores.locomotive / MAX_SCORES.locomotive) * 100
-  );
-  const serviceVipPercent = Math.round(
-    (scores.serviceVip / MAX_SCORES.serviceVip) * 100
-  );
-  const mamasBasketPercent = Math.round(
-    (scores.mamasBasket / MAX_SCORES.mamasBasket) * 100
-  );
-
-  // Determine primary and secondary profiles
-  const profileScores = [
-    { name: "Локомотив", percent: locomotivePercent },
-    { name: "Сервісний VIP", percent: serviceVipPercent },
-    { name: "Мамина корзиночка", percent: mamasBasketPercent },
-  ];
-
-  profileScores.sort((a, b) => b.percent - a.percent);
-
-  const primaryProfile = profileScores[0].name;
-  const secondaryProfile = profileScores[1].name;
+  // Calculate percentage
+  const percentage = Math.round((totalScore / MAX_SCORE) * 100);
+  const isPassed = percentage >= 70;
 
   // Generate recommendation
   let recommendation = "";
 
-  if (primaryProfile === "Локомотив") {
-    if (mamasBasketPercent < 30) {
-      recommendation =
-        "Ідеальний кандидат для ролі VIP-менеджера. Високий рівень ініціативності, стійкості та внутрішнього локусу контролю. Готовий до самостійного прийняття рішень і пробивання опору. Рекомендується для активних продажів та розвитку нових напрямків.";
-    } else {
-      recommendation =
-        "Сильний кандидат з ознаками ініціативності, але з деякою залежністю від зовнішніх факторів. Рекомендується для ролей, де потрібна баланс між ініціативою та дотриманням процесів.";
-    }
-  } else if (primaryProfile === "Сервісний VIP") {
-    if (locomotivePercent < 40) {
-      recommendation =
-        "Надійний кандидат, орієнтований на якість обслуговування та довгострокові стосунки з клієнтами. Високий рівень емпатії та дотримання стандартів. Рекомендується для ролей, де потрібна уважність до деталей та побудова довіри.";
-    } else {
-      recommendation =
-        "Гібридний профіль: поєднує сервісність з ініціативністю. Може успішно працювати як з холодними дзвінками, так і з управлінням існуючих клієнтів. Універсальний кандидат.";
-    }
-  } else {
+  if (isPassed) {
     recommendation =
-      "Кандидат показує ознаки інфантильності та залежності від зовнішніх факторів. Потребує чіткого керівництва, регулярного контролю та схвалення. Рекомендується для ролей з детальним регламентом та постійним супроводом керівника. Не рекомендується для VIP-менеджменту без додаткового розвитку.";
+      "Вітаємо! Ви демонструєте сильні навички партнерського управління VIP-клієнтами. Ви розумієте їхні потреби, розмовляєте їхньою мовою та орієнтовані на довгострокові результати. Ви готові до наступного етапу — розмови з HR та керівництвом компанії. Там ми обговоримо деталі ролі, очікування та можливості розвитку.";
+  } else {
+    const gap = 70 - percentage;
+    recommendation =
+      `Дякуємо за участь у тесті. Ваш результат показує, що вам потрібно розвивати деякі навички для ролі VIP-менеджера. Рекомендуємо зосередитись на: глибшому розумінні потреб клієнта, адаптації комунікації під його рівень, та розвитку партнерського підходу замість трансакційного. Ми пропонуємо вам пройти тест ще раз після роботи над цими аспектами, або обговорити можливості розвитку з нашою командою.`;
   }
 
   return {
-    locomotive: scores.locomotive,
-    serviceVip: scores.serviceVip,
-    mamasBasket: scores.mamasBasket,
-    locomotivePercent,
-    serviceVipPercent,
-    mamasBasketPercent,
-    primaryProfile,
-    secondaryProfile,
+    percentage,
+    isPassed,
     recommendation,
   };
 }
