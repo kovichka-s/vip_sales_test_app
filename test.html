@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIP-менеджер з продажу — Тест</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); min-height: 100vh; color: #e2e8f0; }
+.container { max-width: 720px; margin: 0 auto; padding: 40px 24px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+.slide { display: none; animation: fadeIn 0.5s ease; }
+.slide.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+h1 { font-size: 2rem; color: #fff; margin-bottom: 16px; }
+h2 { font-size: 1.5rem; color: #f8fafc; margin-bottom: 12px; }
+p { color: #94a3b8; line-height: 1.8; margin-bottom: 12px; font-size: 1rem; }
+.card { background: rgba(30, 41, 59, 0.9); border: 1px solid #334155; border-radius: 16px; padding: 32px; margin-bottom: 24px; }
+.option { display: block; width: 100%; padding: 16px 20px; margin: 10px 0; background: rgba(51, 65, 85, 0.6); border: 2px solid #334155; border-radius: 12px; color: #e2e8f0; text-align: left; cursor: pointer; font-size: 0.98rem; transition: all 0.3s; line-height: 1.6; }
+.option:hover { background: rgba(59, 130, 246, 0.2); border-color: #3b82f6; }
+.option.selected { background: rgba(59, 130, 246, 0.3); border-color: #3b82f6; }
+.btn { display: inline-block; padding: 14px 32px; background: #3b82f6; color: #fff; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 16px; }
+.btn:hover { background: #2563eb; transform: translateY(-2px); }
+.btn:disabled { background: #475569; cursor: not-allowed; transform: none; }
+.progress-bar { width: 100%; height: 6px; background: #334155; border-radius: 3px; margin-bottom: 20px; overflow: hidden; }
+.progress-fill { height: 100%; background: #3b82f6; transition: width 0.4s ease; }
+.question-number { color: #3b82f6; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+.result-box { text-align: center; padding: 20px; }
+.result-percent { font-size: 4rem; font-weight: 800; color: #3b82f6; margin: 16px 0; }
+.result-passed { color: #22c55e; }
+.result-failed { color: #f59e0b; }
+.result-text { font-size: 1.1rem; color: #cbd5e1; margin-top: 16px; line-height: 1.8; }
+.result-title { font-size: 1.8rem; color: #fff; margin-bottom: 8px; }
+.hidden { display: none !important; }
+.highlight { color: #60a5fa; font-weight: 600; }
+.note { background: rgba(59, 130, 246, 0.1); border-left
+
+<!-- Слайд 1: Вступ -->
+<div class="slide active" id="slide-0">
+<div class="card">
+<h1>Менеджер з продажу VIP-клієнтів</h1>
+<p>Ми шукаємо менеджера з продажу, який буде працювати з нашими найціннішими клієнтами. Це не просто продажі — це побудова довгострокових партнерських стосунків.</p>
+<div class="note">
+<strong>Ваші основні обов'язки:</strong><br>
+• Розуміти потреби VIP-клієнтів на рівні їхнього бізнесу та стратегії<br>
+• Розмовляти мовою бізнесу<br>
+• Супроводжувати клієнтів як партнер, а не як постачальник<br>
+• Глибоко знати наш продукт та адаптувати його під унікальні потреби кожного клієнта<br>
+• Забезпечувати результати та вимірювати їх за допомогою KPI
+</div>
+<p>Ми цінуємо в кандидатах: емпатію, професіоналізм, бізнес-мислення, готовність адаптувати підхід, орієнтацію на довгострокові стосунки та уважність до деталей.</p>
+</div>
+<div class="card">
+<h2>Перш ніж розпочати</h2>
+<p>Цей тест допоможе нам зрозуміти, наскільки ваш стиль роботи та підхід до клієнтів відповідає цій ролі.</p>
+<p><strong>Тут немає правильних чи неправильних відповідей.</strong> Кожна відповідь — це відображення того, як ви бачите роботу з VIP-клієнтом. Відповідайте так, як ви дійсно вчинили б у реальній ситуації — а не так, як, на вашу думку, ми хочемо почути.</p>
+<p>Чесність — ключ до того, щоб знайти роль, яка дійсно підходить вам.</p>
+<button class="btn" onclick="nextSlide()">Почати тест</button>
+</div>
+</div>: 4px solid #3b82f6; padding: 16px 20px; border-ra
+
+<!-- Q1 -->
+<div class="slide" id="slide-1">
+<div class="card">
+<div class="question-number">Питання 1 з 10</div>
+<h2>Холодний дзвінок</h2>
+<p>Ви здійснюєте холодний дзвінок потенційному VIP-клієнту. Після вашого привітання клієнт відповідає: <span class="highlight">«Слухаю, але в мене мало часу»</span>. Як ви продовжите розмову?</p>
+<button class="option" onclick="selectOption(this, 2)">«Розумію, тому скажу коротко: я звернувся, бо бачу можливість для оптимізації вашого операційного циклу. Якщо це неактуально — скажете одразу.»</button>
+<button class="option" onclick="selectOption(this, 4)">«Розумію. Тоді скажіть, будь ласка, чи актуальне для вас зараз питання підвищення ефективності, щоб я не забирав ваш час даремно?»</button>
+<button class="option" onclick="selectOption(this, 3)">«Я ознайомився з вашим бізнесом і бачу можливість для масштабування вашої діяльності. Є рішення, яке вже дало результат у подібних компаніях. Можу коротко пояснити.»</button>
+<button class="option" onclick="selectOption(this, 5)">«Щоб не навантажувати вас зараз, можу сформулювати коротку ідею в 2–3 рядках і надіслати. Якщо буде цікаво — продовжимо діалог.»</button>
+<button class="option" onclick="selectOption(this, 5)">«Тоді давайте домовимось так: я підготую конкретну пропозицію під вашу ситуацію та ROI-прогноз, і повернусь у зручний для вас час. Коли краще?»</button>
+<button class="btn hidden" id="btn-q1" onclick="nextSlide()">Далі</button>
+</div>
+</div>dius: 0 8px 8px 0; margin: 20px 0; font-size: 0.95
+
+<!-- Q2 -->
+<div class="slide" id="slide-2">
+<div class="card">
+<div class="question-number">Питання 2 з 10</div>
+<h2>«Нам нічого не потрібно»</h2>
+<p>Клієнт після короткого вступу каже: <span class="highlight">«Дякую, але нам зараз нічого не потрібно»</span>. Яка ваша наступна реакція?</p>
+<button class="option" onclick="selectOption(this, 3)">«Розумію, більшість компаній так відповідають на першому контакті. Саме тому коротко скажу: ми допомагаємо оптимізувати витрати, і часто це стає актуальним раніше, ніж очікується. Чи правильно я розумію, що зараз для вас не пріоритет — чи вже є рішення?»</button>
+<button class="option" onclick="selectOption(this, 4)">«Розумію вас. Скажіть, будь ласка, а які метрики вас цікавлять найбільше? Можливо, я зможу бути корисним у майбутньому.»</button>
+<button class="option" onclick="selectOption(this, 5)">«Дякую за відповідь. Підкажіть, будь ласка, коли буде доречно повернутися до цього питання? Я підготую більш релевантну пропозицію, адаптовану під вашу специфіку.»</button>
+<button class="option" onclick="selectOption(this, 2)">«Розумію. Саме тому я і звертаюсь — часто компанії не бачать потреби, поки не стикаються з ризиком. Ми якраз допомагаємо це попередити. Чи було у вас щось подібне?»</button>
+<button class="option" onclick="selectOption(this, 5)">«Розумію вас. Тоді давайте зробимо так: я надішлю вам кейс-стаді з аналітикою результатів. Збережіть мій контакт — щоб, якщо це стане актуальним, ви могли швидко мене знайти. Домовились?»</button>
+<button class="btn hidden" id="btn-q2" onclick="nextSlide()">Далі</button>
+</div>
+</div>
+
+<!-- Q3 -->
+<div class="slide" id="slide-3">
+<div class="card">
+<div class="question-number">Питання 3 з 10</div>
+<h2>«Це дорого»</h2>
+<p>Клієнт каже: <span class="highlight">«Це дорого для нас»</span>. Як ви відповідаєте?</p>
+<button class="option" onclick="selectOption(this, 1)">«Розумію, тоді давайте подивимось, що ми можемо оптимізувати в обсязі, щоб вам було комфортніше по бюджету.»</button>
+<button class="option" onclick="selectOption(this, 0)">«Насправді ціна повністю виправдана, тому що у нас найкраща якість, сервіс, досвід на ринку…»</button>
+<button class="option" onclick="selectOption(this, 5)">«Розумію. Давайте тоді порахуємо: якщо це рішення дає вам [конкретний результат], то за який період воно окупиться і яким буде ваш ROI?»</button>
+<button class="option" onclick="selectOption(this, 4)">«Коли ви кажете "дорого", мені важливо розрізнити: це про бюджетні обмеження чи про сприйняття вартості пропозиції? Скажіть прямо, будь ласка.»</button>
+<button class="option" onclick="selectOption(this, 3)">«Зрозумів вас. Скажіть, будь ласка, яка сума вам видається прийнятною, і ми адаптуємо пакет послуг під вашу цінову стратегію.»</button>
+<button class="btn hidden" id="btn-q3" onclick="nextSlide()">Далі</button>
+</div>
+</div>
+
+<!-- Q4 -->
+<div class="slide" id="slide-4">
+<div class="card">
+<div class="question-number">Питання 4 з 10</div>
+<h2>Терміновий запит VIP-клієнта</h2>
+<p>VIP-клієнт звертається до вас із терміновим запитом і просить виконати задачу швидше, ніж це реально можливо без втрати якості. Як ви будете діяти?</p>
+<button class="option" onclick="selectOption(this, 1)">«Так, звичайно, зробимо максимально швидко. Я передам команді, і ми постараємось вкластися у ваші терміни.»</button>
+<button class="option" onclick="selectOption(this, 0)">«На жаль, це неможливо в такі строки. У нас є встановлені процеси, і ми їх не порушуємо.»</button>
+<button class="option" onclick="selectOption(this, 4)">«Давайте подивимось, що саме для вас критично. Ми можемо пришвидшити частину процесу або змінити scope, щоб ви отримали результат швидше без компромісу якості.»</button>
+<button class="option" onclick="selectOption(this, 4)">«Я розумію критичність для вас. Я уточню всередині команди, де ми можемо прискоритись без втрати якості, і повернусь до вас із конкретними варіантами сьогодні.»</button>
+<button class="option" onclick="selectOption(this, 5)">«Я скажу вам прямо: у ці строки забезпечити якість без компромісів неможливо. Але я можу запропонувати сценарії: або ми залишаємо якість і коригуємо термін, або робимо швидше, але з обмеженим scope. Давайте оберемо, що для вашої бізнес-стратегії зараз пріоритетніше.»</button>
+<button class="btn hidden" id="btn-q4" onclick="nextSlide()">Далі</button>
+</div>
+</div>rem; color: #93c5fd; }
+
+<!-- Q5 -->
+<div class="slide" id="slide-5">
+<div class="card">
+<div class="question-number">Питання 5 з 10</div>
+<h2>Після угоди — підтримка стосунків</h2>
+<p>Після угоди клієнт «в системі». Як ви будете підтримувати партнерські стосунки?</p>
+<button class="option" onclick="selectOption(this, 3)">Я фіксую клієнта в системі супроводу і планую регулярні точки контакту: перевірка результату, зворотний зв'язок, інформування про оновлення.</button>
+<button class="option" onclick="selectOption(this, 5)">Я виходжу на контакт не з метою продажу, а з уточненням: як змінилися його KPI після впровадження рішення і чи виникли нові виклики.</button>
+<button class="option" onclick="selectOption(this, 4)">Я відстежую зміни в його бізнес-середовищі та ринку, і виходжу на контакт тоді, коли бачу потенційну нову потребу або ризик для його операцій.</button>
+<button class="option" onclick="selectOption(this, 3)">Я підтримую ненав'язливий контакт: короткі інсайти по ринку, корисна інформація, релевантні статті без прямого продажу.</button>
+<button class="option" onclick="selectOption(this, 5)">Я повертаюсь до клієнта у ключові моменти: після впровадження (для валідації результатів), при оновленнях продукту або при появі нових рішень, які можуть вплинути на його бізнес-модель.</button>
+<button class="btn hidden" id="btn-q5" onclick="nextSlide()">Далі</button>
+</div>
+</div>
+
+<!-- Q6 -->
+<div class="slide" id="slide-6">
+<div class="card">
+<div class="question-number">Питання 6 з 10</div>
+<h2>Контекст бізнесу клієнта</h2>
+<p>Коли я спілкуюсь з клієнтом про його виклики, я намагаюсь розуміти не тільки його проблему, але й контекст його бізнесу.</p>
+<button class="option" onclick="selectOption(this, 0)">Це не про мене — я зосереджуюсь на тому, що клієнт мені розповідає</button>
+<button class="option" onclick="selectOption(this, 1)">Скоріше не про мене — я розповідаю про наше рішення</button>
+<button class="option" onclick="selectOption(this, 2)">Іноді я питаю про контекст, іноді просто пропоную рішення</button>
+<button class="option" onclick="selectOption(this, 4)">Часто я глибше розбираюсь в його бізнес-моделі та метриках перед тим, як пропонувати рішення</button>
+<button class="option" onclick="selectOption(this, 5)">Це точно про мене — я завжди аналізую його операційні процеси, KPI та стратегічні цілі перед тим, як розробляти пропозицію</button>
+<button class="btn hidden" id="btn-q6" onclick="nextSlide()">Далі</button>
+</div>
+</div>
+
+<!-- Q7 -->
+<div class="slide" id="slide-7">
+<div class="card">
+<div class="question-number">Питання 7 з 10</div>
+<h2>Незгода клієнта</h2>
+<p>Коли клієнт висловлює незгоду з моєю пропозицією, я розглядаю це як можливість краще зрозуміти його потреби.</p>
+<button class="option" onclick="selectOption(this, 0)">Зовсім не про мене — це означає, що він не розуміє цінність</button>
+<button class="option" onclick="selectOption(this, 1)">Скоріше не про мене — я просто пояснюю, чому моя пропозиція правильна</button>
+<button class="option" onclick="selectOption(this, 2)">Іноді я слухаю його аргументи, іноді наполягаю на своєму</button>
+<button class="option" onclick="selectOption(this, 4)">Часто я питаю, які саме аспекти його не влаштовують, щоб переглянути пропозицію</button>
+<button class="option" onclick="selectOption(this, 5)">Це точно про мене — я активно слухаю його заперечення, переглядаю свої припущення та адаптую рішення під його реальні потреби</button>
+<button class="btn hidden" id="btn-q7" onclick="nextSlide()">Далі</button>
+</div>
+</div>
+
+<!-- Q8 -->
+<div class="slide" id="slide-8">
+<div class="card">
+<div class="question-number">Питання 8 з 10</div>
+<h2>Успіх і розуміння потреб</h2>
+<p>Я вважаю, що мій успіх залежить від того, наскільки добре я розумію потреби клієнта.</p>
+<button class="option" onclick="selectOption(this, 0)">Зовсім не про мене — успіх залежить від якості нашого продукту</button>
+<button class="option" onclick="selectOption(this, 1)">Скоріше не про мене — успіх залежить від ціни та умов</button>
+<button class="option" onclick="selectOption(this, 2)">Іноді це важливо, іноді достатньо стандартного рішення</button>
+<button class="option" onclick="selectOption(this, 4)">Часто я вкладаю час у дослідження потреб клієнта перед пропозицією</button>
+<button class="option" onclick="selectOption(this, 5)">Це точно про мене — я вкладаю значні зусилля в аналіз його бізнес-моделі, болів та цілей, щоб запропонувати максимально релевантне рішення</button>
+<button class="btn hidden" id="btn-q8" onclick="nextSlide()">Далі</button>
+</div>
+</div>
+
+<!-- Q9 -->
+<div class="slide" id="slide-9">
+<div class="card">
+<div class="question-number">Питання 9 з 10</div>
+<h2>Бізнес-мова з VIP-клієнтом</h2>
+<p>Коли я спілкуюсь з VIP-клієнтом, я використовую професійну бізнес-мову та терміни, які відповідають його рівню компетенції.</p>
+<button class="option" onclick="selectOption(this, 0)">Зовсім не про мене — я розмовляю просто і зрозуміло</button>
+<button class="option" onclick="selectOption(this, 1)">Скоріше не про мене — я намагаюсь спростити складні концепції</button>
+<button class="option" onclick="selectOption(this, 2)">Іноді я використовую професійні терміни, іноді простіші слова</button>
+<button class="option" onclick="selectOption(this, 4)">Часто я адаптую мову під рівень клієнта та його індустрію</button>
+<button class="option" onclick="selectOption(this, 5)">Це точно про мене — я вільно оперую термінами його індустрії (масштабування, ROI, оптимізація, метрики, KPI, операційна ефективність тощо) та розмовляю на його мові</button>
+<button class="btn hidden" id="btn-q9" onclick="nextSlide()">Далі</button>
+</div>
+</div>
+
+<!-- Q10 -->
+<div class="slide" id="slide-10">
+<div class="card">
+<div class="question-number">Питання 10 з 10</div>
+<h2>Результат після угоди</h2>
+<p>Я вважаю, що мій обов'язок — не тільки продати рішення, але й переконатись, що клієнт отримав очікуваний результат.</p>
+<button class="option" onclick="selectOption(this, 0)">Зовсім не про мене — мій обов'язок закінчується після угоди</button>
+<button class="option" onclick="selectOption(this, 1)">Скоріше не про мене — це обов'язок служби підтримки</button>
+<button class="option" onclick="selectOption(this, 2)">Іноді я перевіряю результати, іноді ні</button>
+<button class="option" onclick="selectOption(this, 4)">Часто я слідкую за впровадженням та результатами</button>
+<button class="option" onclick="selectOption(this, 5)">Це точно про мене — я активно супроводжую клієнта після угоди, аналізую досягнуті результати, KPI та готовий адаптувати рішення, якщо потрібно</button>
+<button class="btn hidden" id="btn-q10" onclick="showResult()">Завершити тест</button>
+</div>
+</div>
+
+<!-- Результат -->
+<div class="slide" id="slide-result">
+<div class="card">
+<div class="result-box">
+<div class="result-title" id="result-title">Ваш результат</div>
+<div class="result-percent" id="result-percent">0%</div>
+<div class="result-text" id="result-text"></div>
+<button class="btn" onclick="location.reload()">Пройти ще раз</button>
+</div>
+</div>
+</div>
+
+</div>
+
+<script>
+let currentSlide = 0;
+let totalScore = 0;
+const maxScore = 50; // 10 questions * max 5 points
+
+function selectOption(btn, score) {
+  const parent = btn.parentElement;
+  const options = parent.querySelectorAll('.option');
+  options.forEach(o => o.classList.remove('selected'));
+  btn.classList.add('selected');
+  totalScore += score;
+  const btnId = parent.querySelector('.btn').id;
+  document.getElementById(btnId).classList.remove('hidden');
+}
+
+function nextSlide() {
+  document.getElementById('slide-' + currentSlide).classList.remove('active');
+  currentSlide++;
+  const next = document.getElementById('slide-' + currentSlide);
+  if (next) next.classList.add('active');
+}
+
+function showResult() {
+  const percentage = Math.round((totalScore / maxScore) * 100);
+  const percentEl = document.getElementById('result-percent');
+  const textEl = document.getElementById('result-text');
+  const titleEl = document.getElementById('result-title');
+
+  percentEl.textContent = percentage + '%';
+
+  if (percentage >= 70) {
+    percentEl.className = 'result-percent result-passed';
+    titleEl.textContent = 'Ви підходите на цю позицію';
+    textEl.textContent = 'Вітаємо! Ваші відповіді показують, що ви розумієте специфіку роботи з VIP-клієнтами: ви розмовляєте мовою бізнесу, орієнтовані на довгострокові стосунки та вмієте знаходити баланс між потребами клієнта і якістю рішення. Ви готові до наступного етапу — розмови з HR та керівництвом компанії.';
+  } else if (percentage >= 50) {
+    percentEl.className = 'result-percent result-failed';
+    titleEl.textContent = 'Потрібне доопрацювання';
+    textEl.textContent = 'Дякуємо за участь. Ваші відповіді показують потенціал, але є кілька зон, які варто підтягнути: глибше розуміння контексту бізнесу клієнта, адаптація комунікації під рівень співрозмовника та розвиток партнерського підходу замість трансакційного. Рекомендуємо звернути увагу на ці аспекти перед наступним кроком.';
+  } else {
+    percentEl.className = 'result-percent result-failed';
+    titleEl.textContent = 'Необхідний розвиток';
+    textEl.textContent = 'Дякуємо за проходження тесту. Результат показує, що поточний підхід до комунікації та роботи з клієнтами потребує значного доопрацювання для цієї ролі. Зосередьтесь на розумінні потреб клієнта, роботі з бізнес-мовою та розвитку навичок партнерського супроводу.';
+  }
+
+  document.getElementById('slide-10').classList.remove('active');
+  document.getElementById('slide-result').classList.add('active');
+}
+</script>
+
+</body>
+</html>
+</style>
+</head>
+<body>
+<div class="container">
