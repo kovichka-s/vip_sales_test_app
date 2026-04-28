@@ -79,7 +79,7 @@ border-radius:4px;margin:4px 0;overflow:hidden}
 <p>Відповіді будуть перемішані для кожного питання.</p>
 <p>В кінці тесту ви побачите результат у відсотковому співвідношенні
  та загальний висновок.</p>
-<button class="btn" onclick="onclick="startTest()"()">Почати тест</button>
+<button class="btn" onclick="startTest()">Почати тест</button>
 </div>
 <div class="slide" id="slide-1">
 <div class="question-number">Питання 1 / 15</div>
@@ -424,10 +424,7 @@ var totalQ=15;
 
 function startTest(){
  currentSlide=1;
- 
-currentSlide=0;
-archScore={comm:0,exec:0,diplom:0,manip:0};
-document.getElementById('slide-0').classList.remove('active');
+ archScore={comm:0,exec:0,diplom:0,manip:0};
 document.getElementById('slide-1').classList.add('active');
 }
 
