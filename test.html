@@ -313,6 +313,8 @@ if(next){next.classList.add('active');}
 
 function showResult(){
 var passedCount=archScore.comm+archScore.exec+archScore.diplom;
+   document.getElementById('slide-'+currentSlide).classList.remove('active');
+  document.getElementById('slide-result').classList.add('active');
 var percentage=Math.round((passedCount/totalQ)*100);
 var percentEl=document.getElementById('result-percent');
 var textEl=document.getElementById('result-text');
