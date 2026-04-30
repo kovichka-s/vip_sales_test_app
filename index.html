@@ -10,7 +10,7 @@
 body{font-family:'Segoe UI',Tahoma,
 Geneva,Verdana,sans-serif;background:#0f172a;color:#e2e8f0}
 .container{max-width:1200px;margin:0 auto;padding:40px 24px}
-.slide{display:none}
+.slide{display:none;padding-bottom:90px}
 .slide.active{display:block}
 h1{font-size:2rem;color:#fff;margin-bottom:16px}
 h2{font-size:1.5rem;color:#f8fafc;margin-bottom:12px}
@@ -29,6 +29,14 @@ background:#3b82f6;color:#fff;border:none;border-radius:10px;
 font-size:1rem;font-weight:600;cursor:pointer;transition:all .3s;margin:16px auto 0}
 .btn:hover{background:#2563eb}
 .btn:disabled{background:#475569;cursor:not-allowed}
+
+.slide > .btn{
+  position:sticky;
+  bottom:16px;
+  z-index:10;
+  box-shadow:0 8px 24px rgba(15,23,42,.55);
+}
+
 .question-number{color:#3b82f6;font-size:.85rem;font-weight:600;
 margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
 .result-box{text-align:center;padding:20px}
