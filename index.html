@@ -319,6 +319,8 @@ border-radius:4px;margin:4px 0;overflow:hidden}
 var currentSlide = 0;
 var archScore = {locom:0, exec:0, diplom:0, manip:0};
 var totalQ = 12;
+var candidateAnswers = {};
+var targetArch = 'diplom';
 
 /* =========================
    START TEST
@@ -375,6 +377,16 @@ function selectArch(btn, arch){
   btn.classList.add('selected');
   archScore[arch]++;
   slide.setAttribute('data-selected-arch', arch);
+
+  var questionText = slide.querySelector('p').innerText;
+  var answerText = btn.innerText;
+
+  candidateAnswers[currentSlide] = {
+    question: questionText,
+    selectedArch: arch,
+    answer: answerText,
+    match: arch === targetArch
+  };
 
   var btnId = 'btn-slide-' + currentSlide;
   var nextBtn = document.getElementById(btnId);
@@ -483,7 +495,31 @@ Email: <a href="mailto:kovichkas@gmail.com" style="color:#60a5fa">kovichkas@gmai
  // }
 
   // 10. debug (тимчасово)
-  console.log('RESULT:', {percentage, archScore, status});
+ var mismatches = [];
+
+for (var q in candidateAnswers){
+  if (!candidateAnswers[q].match){
+    mismatches.push({
+      questionNumber: q,
+      selectedArch: candidateAnswers[q].selectedArch,
+      question: candidateAnswers[q].question,
+      answer: candidateAnswers[q].answer
+    });
+  }
+}
+
+console.log('HR REPORT:', {
+  candidate: {
+    name: document.getElementById('candidate-name').value,
+    email: document.getElementById('candidate-email').value,
+    phone: document.getElementById('candidate-phone').value
+  },
+  targetArchetype: targetArch,
+  percentage: percentage,
+  dominantArchetype: maxArch,
+  mismatches: mismatches
+});
+ console.log('RESULT:', {percentage, archScore, status});
 }
 
 </script>
