@@ -336,12 +336,9 @@ function showResult(){
   if (resultSlide) resultSlide.classList.add('active');
 
   // 3. розрахунок
-  var passedCount =
-    archScore.comm +
-    archScore.exec +
-    archScore.diplom;
+  var targetArch = 'diplom';
 
-  var percentage = Math.round((passedCount / totalQ) * 100);
+var percentage = Math.round((archScore[targetArch] / totalQ) * 100);
 
   // 4. DOM елементи
   var percentEl = document.getElementById('result-percent');
@@ -372,10 +369,10 @@ function showResult(){
   };
 
   // 7. базова інформація
-  if (archStats){
-    archStats.innerHTML =
-      '<p>Архетип: <strong>' + archNames[maxArch] + '</strong></p>';
-  }
+//  if (archStats){
+  //  archStats.innerHTML =
+   //   '<p>Архетип: <strong>' + archNames[maxArch] + '</strong></p>';
+//  }
 
   /* =========================
      8. ЛОГІКА РІШЕНЬ HR
@@ -410,9 +407,9 @@ Email: <a href="mailto:kovichkas@gmail.com" style="color:#60a5fa">kovichkas@gmai
   }
 
   // 9. показ архетипу
-  if (archBox){
-    archBox.classList.remove('hidden');
-  }
+ // if (archBox){
+   // archBox.classList.remove('hidden');
+ // }
 
   // 10. debug (тимчасово)
   console.log('RESULT:', {percentage, archScore, status});
