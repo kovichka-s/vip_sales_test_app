@@ -108,7 +108,7 @@ border-radius:4px;margin:4px 0;overflow:hidden}
 
 <input class="input-field" id="candidate-name" type="text" placeholder="Ім’я та прізвище" minlength="2" required>
 <input class="input-field" id="candidate-email" type="email" placeholder="Email" required>
-<input class="input-field" id="candidate-phone" type="tel" placeholder="+38 (093) 123 45 67" inputmode="tel" required>
+<input class="input-field" id="candidate-phone" type="tel" placeholder="+38 (0__) ___-__-__" inputmode="numeric" maxlength="19" required>
 
   <label class="consent-label">
     <input type="checkbox" id="privacy-consent">
@@ -322,7 +322,44 @@ var targetArch = 'diplom';
 /* =========================
    START TEST
 ========================= */
-function startTest(){
+function formatPhone(value){
+  var digits = value.replace(/\D/g, '');
+
+  if (digits.startsWith('38')){
+    digits = digits.slice(2);
+  }
+
+  if (digits.startsWith('0')){
+    digits = digits.slice(1);
+  }
+
+  digits = digits.slice(0, 9);
+
+  var p1 = digits.slice(0, 2);
+  var p2 = digits.slice(2, 5);
+  var p3 = digits.slice(5, 7);
+  var p4 = digits.slice(7, 9);
+
+  var result = '+38 (0';
+
+  if (p1) result += p1;
+  result += ')';
+
+  if (p2) result += ' ' + p2;
+  if (p3) result += '-' + p3;
+  if (p4) result += '-' + p4;
+
+  return result;
+}
+
+var phoneInput = document.getElementById('candidate-phone');
+
+if (phoneInput){
+  phoneInput.addEventListener('input', function(){
+    phoneInput.value = formatPhone(phoneInput.value);
+  });
+}
+ function startTest(){
   var nameEl = document.getElementById('candidate-name');
   var emailEl = document.getElementById('candidate-email');
   var phoneEl = document.getElementById('candidate-phone');
@@ -334,7 +371,7 @@ function startTest(){
   var phone = phoneEl.value.trim();
 
  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
- var phonePattern = /^\+38\s?\(0\d{2}\)\s?\d{3}\s?\d{2}\s?\d{2}$/;
+ var phonePattern = /^\+38 \(0\d{2}\) \d{3}-\d{2}-\d{2}$/;
 
   var oldError = document.getElementById('form-error');
   if (oldError) oldError.remove();
