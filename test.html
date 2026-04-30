@@ -312,7 +312,7 @@ if(next){next.classList.add('active');}
 }
 
 function showResult(){
-console.log('scores', archScore);
+alert(JSON.stringify(archScore));
 var passedCount=archScore.comm+archScore.exec+archScore.diplom+archScore.manip;
 document.querySelectorAll('.slide').forEach(function(s){s.classList.remove('active');});
 document.getElementById('slide-result').classList.add('active');
@@ -326,12 +326,12 @@ percentEl.textContent=percentage+'%';
 var maxArch='',maxCount=0;
 for(var key in archScore){
 if(archScore[key]>maxCount){maxCount=archScore[key];maxArch=key;}}
-var archNames={comm:'Комунікатор',exec:'Виконавець',diplom:'Дипломат',manip:'Маніпулятор'};
+var archNames={comm:'Локомотив',exec:'Виконавець',diplom:'Дипломат',manip:'Маніпулятор'};
 var archStats=document.getElementById('arch-stats');
 archStats.innerHTML='<p class="archetype">Архетип: <strong>'+archNames[maxArch]+'</strong></p>';
 var total=archScore.comm+archScore.exec+archScore.diplom+archScore.manip;
 archStats.innerHTML+='<div class="arch-bar"><div class="arch-fill bar-comm" style="width:'+(archScore.comm/total*100)+'%"></div></div>';
-archStats.innerHTML+='<p class="archetype" style="font-size:.8rem">Комунікатор: '+(Math.round(archScore.comm/total*100))+'%</p>';
+archStats.innerHTML+='<p class="archetype" style="font-size:.8rem">Локомотив: '+(Math.round(archScore.comm/total*100))+'%</p>';
 archStats.innerHTML+='<div class="arch-bar"><div class="arch-fill bar-exec" style="width:'+(archScore.exec/total*100)+'%"></div></div>';
 archStats.innerHTML+='<p class="archetype" style="font-size:.8rem">Виконавець: '+(Math.round(archScore.exec/total*100))+'%</p>';
 archStats.innerHTML+='<div class="arch-bar"><div class="arch-fill bar-manip" style="width:'+(archScore.manip/total*100)+'%"></div></div>';
