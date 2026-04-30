@@ -107,9 +107,11 @@ border-radius:4px;margin:4px 0;overflow:hidden}
 <div class="card">
   <h2>Ваші контактні дані</h2>
 
-  <input class="input-field" id="candidate-name" type="text" placeholder="Ім’я та прізвище">
-  <input class="input-field" id="candidate-email" type="email" placeholder="Email">
-  <input class="input-field" id="candidate-phone" type="tel" placeholder="Телефон">
+  <input class="input-field" id="candidate-name" type="text" placeholder="Ім’я та прізвище" minlength="2" required>
+
+<input class="input-field" id="candidate-email" type="email" placeholder="Email" required>
+
+<input class="input-field" id="candidate-phone" type="tel" placeholder="Телефон" inputmode="tel" pattern="^\+?[0-9\s\-\(\)]{10,20}$" required>
 
   <label class="consent-label">
     <input type="checkbox" id="privacy-consent">
@@ -329,11 +331,16 @@ function startTest(){
 
   var name = nameEl.value.trim();
   var consent = consentEl.checked;
+  var email = emailEl.value.trim();
+  var phone = phoneEl.value.trim();
+
+ var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+ var phonePattern = /^\+?[0-9\s\-\(\)]{10,20}$/;
 
   var oldError = document.getElementById('form-error');
   if (oldError) oldError.remove();
 
-  if (!name || !emailEl.checkValidity() || !phoneEl.checkValidity() || !consent){
+ if (!name || !emailPattern.test(email) || !phonePattern.test(phone) || !consent){
     var error = document.createElement('p');
     error.id = 'form-error';
     error.className = 'form-error';
@@ -343,7 +350,7 @@ function startTest(){
   }
 
   currentSlide = 1;
-  archScore = {comm:0, exec:0, diplom:0, manip:0};
+  archScore = {locom:0, exec:0, diplom:0, manip:0};
 
   document.getElementById('slide-0').classList.remove('active');
   document.getElementById('slide-1').classList.add('active');
@@ -352,8 +359,14 @@ function startTest(){
    SELECT ANSWER
 ========================= */
 function selectArch(btn, arch){
+  var slide = document.getElementById('slide-' + currentSlide);
   var parent = btn.parentElement;
   var opts = parent.querySelectorAll('.option');
+
+  var previousArch = slide.getAttribute('data-selected-arch');
+  if (previousArch){
+    archScore[previousArch]--;
+  }
 
   for (var i = 0; i < opts.length; i++){
     opts[i].classList.remove('selected');
@@ -361,6 +374,7 @@ function selectArch(btn, arch){
 
   btn.classList.add('selected');
   archScore[arch]++;
+  slide.setAttribute('data-selected-arch', arch);
 
   var btnId = 'btn-slide-' + currentSlide;
   var nextBtn = document.getElementById(btnId);
