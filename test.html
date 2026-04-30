@@ -387,7 +387,12 @@ function showResult(){
     status = 'HIRE';
     if (titleEl) titleEl.textContent = 'Ви підходите на позицію';
     if (textEl) textEl.textContent =
-      'Високий матч з вимогами вакансії. Рекомендовано до співбесіди з HR + керівником.';
+     'Високий матч з вимогами вакансії. Рекомендовано перейти до співбесіди з HR та керівником.<br><br>' +
+  '<strong>Наступний крок:</strong><br>' +
+  'Ви можете написати HR-менеджеру для узгодження співбесіди або самостійно обрати зручний час у календарі.<br><br>' +
+  'Email: <a href="mailto:kovichkas@gmail.com" style="color:#60a5fa">kovichkas@gmail.com</a><br>' +
+  'Телефон: <a href="tel:+380XXXXXXXXX" style="color:#60a5fa">+380 XX XXX XX XX</a><br><br>' +
+  '<a class="calendly-btn" href="https://calendly.com/your-link" target="_blank">Записатися на співбесіду</a>';
   }
 
   else if (percentage >= 50){
