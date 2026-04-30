@@ -312,9 +312,10 @@ if(next){next.classList.add('active');}
 }
 
 function showResult(){
-var passedCount=archScore.comm+archScore.exec+archScore.diplom;
-   document.querySelectorAll('.slide').forEach(function(s){s.classList.remove('active');});
-  document.getElementById('slide-result').classList.add('active');
+console.log('scores', archScore);
+var passedCount=archScore.comm+archScore.exec+archScore.diplom+archScore.manip;
+document.querySelectorAll('.slide').forEach(function(s){s.classList.remove('active');});
+document.getElementById('slide-result').classList.add('active');
 var percentage=Math.round((passedCount/totalQ)*100);
 var percentEl=document.getElementById('result-percent');
 var textEl=document.getElementById('result-text');
