@@ -99,19 +99,16 @@ border-radius:4px;margin:4px 0;overflow:hidden}
 - Забезпечувати результати та вимірювати їх через KPI</div>
 <p>Ми цінуємо в кандидатах: емпатію, професіоналізм,
  бізнес-мислення, готовність адаптувати підхід, орієнтацію на результат.</p>
+ Кожна відповідь — правильна. Не потрібно вгадувати, просто оберіть ту, яка найкраще відображає ваш підхід.</p>
+<p>Це не оцінка вашого професіоналізму, а показник того, наскільки ваші методи вирішення завдань збігаються з процесами, які прийняті в нашій команді. 
+ Ми шукаємо спеціаліста чиї підходи до роботи максимально синхронізовані з нашими поточними завданнями</p>
 <p><strong>Нижче ви знайдете ситуаційні запитання.</strong>
- Кожна відповідь — правильна. Не потрібно нічого вгадувати.
- Оберіть відповідь, яка найкраще відображає ваш підхід.</p>
-
-<p>Ваш результат відображає відсоток відповідності вашого стилю роботи вимогам компанії саме для цієї ролі. Це не оцінка вашого професіоналізму, а показник того, наскільки ваші методи вирішення завдань збігаються з процесами, які прийняті в нашій команді. Ми шукаємо не просто фахівця, а людину, чиї підходи до роботи максимально синхронізовані з нашими поточними завданнями</p>
-<div class="card">
+ <div class="card">
   <h2>Ваші контактні дані</h2>
 
-  <input class="input-field" id="candidate-name" type="text" placeholder="Ім’я та прізвище" minlength="2" required>
-
+<input class="input-field" id="candidate-name" type="text" placeholder="Ім’я та прізвище" minlength="2" required>
 <input class="input-field" id="candidate-email" type="email" placeholder="Email" required>
-
-<input class="input-field" id="candidate-phone" type="tel" placeholder="Телефон" inputmode="tel" pattern="^\+?[0-9\s\-\(\)]{10,20}$" required>
+<input class="input-field" id="candidate-phone" type="tel" placeholder="+38 (093) 123 45 67" inputmode="tel" required>
 
   <label class="consent-label">
     <input type="checkbox" id="privacy-consent">
@@ -465,7 +462,7 @@ var percentage = Math.round((archScore[targetArch] / totalQ) * 100);
 
   if (percentage >= 70){
     status = 'HIRE';
-    if (titleEl) titleEl.textContent = 'Ви підходите на позицію';
+    if (titleEl) titleEl.textContent = 'Вітаємо!';
     if (textEl) textEl.innerHTML =
    `Ваш стиль роботи збігається з очікуваннями компанії для цієї позиції. Ми пропонуємо вам наступний етап — співбесіду з HR та керівником.<br><br>
 <strong>Наступний крок:</strong><br>
@@ -484,7 +481,7 @@ Email: <a href="mailto:kovichkas@gmail.com" style="color:#60a5fa">kovichkas@gmai
 
   else {
     status = 'NO_MATCH';
-    if (titleEl) titleEl.textContent = 'Поки не підходить';
+    if (titleEl) titleEl.textContent = 'Нажаль ви не підходите';
     if (textEl) textEl.textContent =
       'Рекомендовано розвиток ключових навичок перед повторним проходженням.';
   }
