@@ -304,7 +304,7 @@ border-radius:4px;margin:4px 0;overflow:hidden}
     <div class="result-percent" id="result-percent">0%</div>
 
     <p class="result-text" id="result-text"></p>
-
+<div class="arch-box" id="hr-debug-report"></div>
     <div class="arch-box hidden" id="arch-box">
       <h2>Ваш стиль відповідей</h2>
       <div id="arch-stats"></div>
@@ -386,8 +386,9 @@ if (!namePattern.test(name) || !emailPattern.test(email) || !phonePattern.test(p
     return;
   }
 
-  currentSlide = 1;
-  archScore = {locom:0, exec:0, diplom:0, manip:0};
+currentSlide = 1;
+archScore = {locom:0, exec:0, diplom:0, manip:0};
+candidateAnswers = {};
 
   document.getElementById('slide-0').classList.remove('active');
   document.getElementById('slide-1').classList.add('active');
@@ -413,7 +414,7 @@ function selectArch(btn, arch){
   archScore[arch]++;
   slide.setAttribute('data-selected-arch', arch);
 
-  var questionText = slide.querySelector('p').innerText;
+ var questionText = parent.querySelector('p').innerText;
   var answerText = btn.innerText;
 
   candidateAnswers[currentSlide] = {
@@ -464,6 +465,7 @@ var percentage = Math.round((archScore[targetArch] / totalQ) * 100);
   var textEl = document.getElementById('result-text');
   var archBox = document.getElementById('arch-box');
   var archStats = document.getElementById('arch-stats');
+ var hrDebugReport = document.getElementById('hr-debug-report');
 
   // 5. safety check (щоб не було “порожньо”)
   if (percentEl) percentEl.textContent = percentage + '%';
@@ -542,7 +544,37 @@ for (var q in candidateAnswers){
     });
   }
 }
+if (hrDebugReport){
+  var reportHtml = '<h2>Тимчасовий HR-звіт</h2>';
 
+  reportHtml += '<p><strong>Цільовий профіль:</strong> ' + archNames[targetArch] + '</p>';
+  reportHtml += '<p><strong>Результат:</strong> ' + percentage + '%</p>';
+  reportHtml += '<p><strong>Домінантний стиль кандидата:</strong> ' + archNames[maxArch] + '</p>';
+
+  reportHtml += '<p><strong>Розподіл відповідей:</strong><br>' +
+    'Локомотив: ' + archScore.locom + '<br>' +
+    'Виконавець: ' + archScore.exec + '<br>' +
+    'Дипломат: ' + archScore.diplom + '<br>' +
+    'Маніпулятор: ' + archScore.manip + '</p>';
+
+  if (mismatches.length === 0){
+    reportHtml += '<p><strong>Відхилення від цільового профілю:</strong> немає.</p>';
+  } else {
+    reportHtml += '<p><strong>Відповіді, які не збіглися з цільовим профілем:</strong></p>';
+
+    mismatches.forEach(function(item){
+      reportHtml +=
+        '<div style="margin:16px 0;padding:14px;border:1px solid #475569;border-radius:10px;background:rgba(15,23,42,.5)">' +
+        '<p><strong>Ситуація ' + item.questionNumber + ':</strong><br>' + item.question + '</p>' +
+        '<p><strong>Обрана відповідь:</strong><br>' + item.answer + '</p>' +
+        '<p><strong>Тип відповіді:</strong> ' + archNames[item.selectedArch] + '</p>' +
+        '</div>';
+    });
+  }
+
+  hrDebugReport.innerHTML = reportHtml;
+}
+ 
 console.log('HR REPORT:', {
   candidate: {
     name: document.getElementById('candidate-name').value,
