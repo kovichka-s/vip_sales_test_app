@@ -370,17 +370,18 @@ if (phoneInput){
   var email = emailEl.value.trim();
   var phone = phoneEl.value.trim();
 
+ var namePattern = /^[A-Za-zА-Яа-яІіЇїЄєҐґ'’\-]+(?:\s+[A-Za-zА-Яа-яІіЇїЄєҐґ'’\-]+){1,2}$/; 
  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
  var phonePattern = /^\+38 \(0\d{2}\) \d{3}-\d{2}-\d{2}$/;
 
   var oldError = document.getElementById('form-error');
   if (oldError) oldError.remove();
 
- if (!name || !emailPattern.test(email) || !phonePattern.test(phone) || !consent){
+if (!namePattern.test(name) || !emailPattern.test(email) || !phonePattern.test(phone) || !consent){
     var error = document.createElement('p');
     error.id = 'form-error';
     error.className = 'form-error';
-    error.textContent = 'Будь ласка, заповніть ім’я, коректний email, телефон та підтвердіть згоду на обробку персональних даних.';
+    error.textContent = 'Будь ласка, введіть ім’я та прізвище, коректний email, телефон і підтвердіть згоду на обробку персональних даних';
     document.querySelector('#slide-0 .card:last-of-type').appendChild(error);
     return;
   }
