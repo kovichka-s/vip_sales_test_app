@@ -259,113 +259,143 @@ border-radius:4px;margin:4px 0;overflow:hidden}
 Я перегляну пріоритети на користь найбільш вигідних запитів, оскільки вважаю, що зараз треба акцентуватися на якості, а не на кількості. Я буду ставити додаткові задачі в низький пріоритет, аргументуючи це необхідністю бездоганного опрацювання, щоб зберегти свій звичний ритм роботи</button>
 <button class="btn hidden" id="btn-slide-12" onclick="showResult()">Показати результат</button>
 </div>
-<div class="slide" id="slide-result">
-<div class="result-box">
-<div class="result-percent" id="result-percent">0%</div>
-<div class="result-title" id="result-title"></div>
-<div class="result-text" id="result-text"></div>
-<div class="arch-box hidden" id="arch-box">
-<h2 style="font-size:1.3rem;color:#fff;margin-bottom:16px;">Ваш психологічний профіль:</h2>
-<div id="arch-stats"></div>
-</div>
-<div id="passed-block" class="hidden">
- </div>
-<div style="margin-top:24px;padding:20px;
-background:rgba(34,197,94,.1);border:2px solid #22c55e;border-radius:12px;">
-<h2 style="font-size:1.3rem;color:#22c55e;">ПРОЙДЕНО!</h2>
-<p style="color:#cbd5e1;margin:12px 0;">Ви успішно пройшли тест та отримали
- запрошення на розмову з HR-командою нашої компанії.</p>
-<p style="color:#94a3b8;margin:16px 0;">Запишіться на зустріч:</p>
-<a href="https://calendly.com/kovichkas" target="_blank"
- class="calendly-btn">Записатись на зустріч</a>
-<p style="color:#94a3b8;margin-top:12px;">Email: kovichkas@gmail.com
- <br>Телефон: +38 (0XX) XXX-XX-XX</p>
-</div>
-</div>
 <script>
-var currentSlide=0;
-var archScore={comm:0,exec:0,diplom:0,manip:0};
-var totalQ=12;
 
+var currentSlide = 0;
+var archScore = {comm:0, exec:0, diplom:0, manip:0};
+var totalQ = 12;
+
+/* =========================
+   START TEST
+========================= */
 function startTest(){
- currentSlide=1;
- archScore={comm:0,exec:0,diplom:0,manip:0};
-                 document.getElementById('slide-0').classList.remove('active');
-document.getElementById('slide-1').classList.add('active');
+  currentSlide = 1;
+  archScore = {comm:0, exec:0, diplom:0, manip:0};
+
+  document.getElementById('slide-0').classList.remove('active');
+  document.getElementById('slide-1').classList.add('active');
 }
 
-function selectArch(btn,arch){
-var parent=btn.parentElement;
-var opts=parent.querySelectorAll('.option');
-for(var i=0;i<opts.length;i++){opts[i].classList.remove('selected');}
-btn.classList.add('selected');
-archScore[arch]++;
-var btnId='btn-slide-'+currentSlide;
-document.getElementById(btnId).classList.remove('hidden');
+/* =========================
+   SELECT ANSWER
+========================= */
+function selectArch(btn, arch){
+  var parent = btn.parentElement;
+  var opts = parent.querySelectorAll('.option');
+
+  for (var i = 0; i < opts.length; i++){
+    opts[i].classList.remove('selected');
+  }
+
+  btn.classList.add('selected');
+  archScore[arch]++;
+
+  var btnId = 'btn-slide-' + currentSlide;
+  var nextBtn = document.getElementById(btnId);
+  if (nextBtn) nextBtn.classList.remove('hidden');
 }
 
+/* =========================
+   NEXT SLIDE
+========================= */
 function nextSlide(){
-document.getElementById('slide-'+currentSlide).classList.remove('active');
-currentSlide++;
-var next=document.getElementById('slide-'+currentSlide);
-if(next){next.classList.add('active');}
+  document.getElementById('slide-' + currentSlide).classList.remove('active');
+  currentSlide++;
+
+  var next = document.getElementById('slide-' + currentSlide);
+  if (next) next.classList.add('active');
 }
 
+/* =========================
+   SHOW RESULT (MAIN LOGIC)
+========================= */
 function showResult(){
-alert(JSON.stringify(archScore));
-var passedCount=archScore.comm+archScore.exec+archScore.diplom+archScore.manip;
-document.querySelectorAll('.slide').forEach(function(s){s.classList.remove('active');});
-document.getElementById('slide-result').classList.add('active');
-var percentage=Math.round((passedCount/totalQ)*100);
-var percentEl=document.getElementById('result-percent');
-var textEl=document.getElementById('result-text');
-var titleEl=document.getElementById('result-title');
-var passedBlock=document.getElementById('passed-block');
-var archBox=document.getElementById('arch-box');
-percentEl.textContent=percentage+'%';
-var maxArch='',maxCount=0;
-for(var key in archScore){
-if(archScore[key]>maxCount){maxCount=archScore[key];maxArch=key;}}
-var archNames={comm:'Локомотив',exec:'Виконавець',diplom:'Дипломат',manip:'Маніпулятор'};
-var archStats=document.getElementById('arch-stats');
-archStats.innerHTML='<p class="archetype">Архетип: <strong>'+archNames[maxArch]+'</strong></p>';
-var total=archScore.comm+archScore.exec+archScore.diplom+archScore.manip;
-archStats.innerHTML+='<div class="arch-bar"><div class="arch-fill bar-comm" style="width:'+(archScore.comm/total*100)+'%"></div></div>';
-archStats.innerHTML+='<p class="archetype" style="font-size:.8rem">Локомотив: '+(Math.round(archScore.comm/total*100))+'%</p>';
-archStats.innerHTML+='<div class="arch-bar"><div class="arch-fill bar-exec" style="width:'+(archScore.exec/total*100)+'%"></div></div>';
-archStats.innerHTML+='<p class="archetype" style="font-size:.8rem">Виконавець: '+(Math.round(archScore.exec/total*100))+'%</p>';
-archStats.innerHTML+='<div class="arch-bar"><div class="arch-fill bar-manip" style="width:'+(archScore.manip/total*100)+'%"></div></div>';
-archStats.innerHTML+='<p class="archetype" style="font-size:.8rem">Маніпулятор: '+(Math.round(archScore.manip/total*100))+'%</p>';
-archStats.innerHTML+='<div class="arch-bar"><div class="arch-fill bar-diplom" style="width:'+(archScore.diplom/total*100)+'%"></div></div>';
-archStats.innerHTML+='<p class="archetype" style="font-size:.8rem">Дипломат: '+(Math.round(archScore.diplom/total*100))+'%</p>';
-archBox.classList.remove('hidden');
-if(percentage>=70){
-percentEl.className='result-percent result-passed';
-titleEl.textContent='Ви підходите на цю позицію';
-textEl.textContent='Вітаємо! Ваші відповіді показують, що ви розумієте специфіку роботи'
-+' з VIP-клієнтами. Ви розмовляєте мовою бізнесу, орієнтовані на довгострокові'
-+' стосунки та вмієте знаходити баланс між потребами клієнта і якістю рішення.'
-+' Ваш основний архетип — '+archNames[maxArch]+'. Вам варто звернути увагу на розвиток'
-+' навичок швидкого прийняття рішень та більш впевнено діяти в критичних ситуаціях.';
-passedBlock.classList.remove('hidden');
-}else if(percentage>=50){
-percentEl.className='result-percent result-failed';
-titleEl.textContent='Потрібне доопрацювання';
-textEl.textContent='Дякуємо за участь. Ваші відповіді показують потенціал,'
-+' але є кілька зон, які варто підтягнути: глибше розуміння контексту бізнесу'
-+' клієнта, адаптація комунікації під рівень співрозмовника та розвиток'
-+' партнерського підходу замість транзакційного. Ваш основний архетип — '
-+archNames[maxArch]+'. Рекомендуємо звернути увагу на ці аспекти.';
-}else{
-percentEl.className='result-percent result-failed';
-titleEl.textContent='Необхідний розвиток';
-textEl.textContent='Дякуємо за проходження тесту. Результат показує, що для роботи'
-+' з VIP-клієнтами потрібно серйозно розвивати навички бізнес-комунікації'
-+' та орієнтацію на довгострокові партнерські стосунки. Ваш основний'
-+' архетип — '+archNames[maxArch]+'. Для досягнення бажаного рівня вам'
-+' знадобиться інтенсивна робота над ключовими компетенціями.';
+
+  // 1. закриваємо всі слайди
+  document.querySelectorAll('.slide').forEach(function(s){
+    s.classList.remove('active');
+  });
+
+  // 2. відкриваємо фінальний слайд
+  var resultSlide = document.getElementById('slide-result');
+  if (resultSlide) resultSlide.classList.add('active');
+
+  // 3. розрахунок
+  var passedCount =
+    archScore.comm +
+    archScore.exec +
+    archScore.diplom;
+
+  var percentage = Math.round((passedCount / totalQ) * 100);
+
+  // 4. DOM елементи
+  var percentEl = document.getElementById('result-percent');
+  var titleEl = document.getElementById('result-title');
+  var textEl = document.getElementById('result-text');
+  var archBox = document.getElementById('arch-box');
+  var archStats = document.getElementById('arch-stats');
+
+  // 5. safety check (щоб не було “порожньо”)
+  if (percentEl) percentEl.textContent = percentage + '%';
+
+  // 6. архетип
+  var maxArch = '';
+  var maxCount = 0;
+
+  for (var key in archScore){
+    if (archScore[key] > maxCount){
+      maxCount = archScore[key];
+      maxArch = key;
+    }
+  }
+
+  var archNames = {
+    comm: 'Комунікатор',
+    exec: 'Виконавець',
+    diplom: 'Дипломат',
+    manip: 'Маніпулятор'
+  };
+
+  // 7. базова інформація
+  if (archStats){
+    archStats.innerHTML =
+      '<p>Архетип: <strong>' + archNames[maxArch] + '</strong></p>';
+  }
+
+  /* =========================
+     8. ЛОГІКА РІШЕНЬ HR
+  ========================= */
+
+  var status = '';
+
+  if (percentage >= 70){
+    status = 'HIRE';
+    if (titleEl) titleEl.textContent = 'Ви підходите на позицію';
+    if (textEl) textEl.textContent =
+      'Високий матч з вимогами вакансії. Рекомендовано до співбесіди з HR + керівником.';
+  }
+
+  else if (percentage >= 50){
+    status = 'POTENTIAL';
+    if (titleEl) titleEl.textContent = 'Потенційний кандидат';
+    if (textEl) textEl.textContent =
+      'Часткове співпадіння. Потрібно посилити soft skills перед роллю.';
+  }
+
+  else {
+    status = 'NO_MATCH';
+    if (titleEl) titleEl.textContent = 'Поки не підходить';
+    if (textEl) textEl.textContent =
+      'Рекомендовано розвиток ключових навичок перед повторним проходженням.';
+  }
+
+  // 9. показ архетипу
+  if (archBox){
+    archBox.classList.remove('hidden');
+  }
+
+  // 10. debug (тимчасово)
+  console.log('RESULT:', {percentage, archScore, status});
 }
-}
+
 </script>
-</body>
-</html>
