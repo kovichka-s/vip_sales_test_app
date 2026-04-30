@@ -322,23 +322,22 @@ var totalQ = 12;
    START TEST
 ========================= */
 function startTest(){
-  <input class="input-field" id="candidate-name" type="text" placeholder="Ім’я та прізвище" minlength="2" required>
+  var nameEl = document.getElementById('candidate-name');
+  var emailEl = document.getElementById('candidate-email');
+  var phoneEl = document.getElementById('candidate-phone');
+  var consentEl = document.getElementById('privacy-consent');
 
-<input class="input-field" id="candidate-email" type="email" placeholder="Email" required>
-
-<input class="input-field" id="candidate-phone" type="tel" placeholder="Телефон" inputmode="tel" pattern="^\+?[0-9\s\-\(\)]{10,20}$" required>
+  var name = nameEl.value.trim();
+  var consent = consentEl.checked;
 
   var oldError = document.getElementById('form-error');
   if (oldError) oldError.remove();
 
-  var emailEl = document.getElementById('candidate-email');
-var phoneEl = document.getElementById('candidate-phone');
-
-if (!name || !emailEl.checkValidity() || !phoneEl.checkValidity() || !consent){
+  if (!name || !emailEl.checkValidity() || !phoneEl.checkValidity() || !consent){
     var error = document.createElement('p');
     error.id = 'form-error';
     error.className = 'form-error';
-    error.textContent = 'Будь ласка, заповніть ім’я, коректний email, телефон та підтвердіть згоду на обробку персональних даних';
+    error.textContent = 'Будь ласка, заповніть ім’я, коректний email, телефон та підтвердіть згоду на обробку персональних даних.';
     document.querySelector('#slide-0 .card:last-of-type').appendChild(error);
     return;
   }
@@ -349,7 +348,6 @@ if (!name || !emailEl.checkValidity() || !phoneEl.checkValidity() || !consent){
   document.getElementById('slide-0').classList.remove('active');
   document.getElementById('slide-1').classList.add('active');
 }
-
 /* =========================
    SELECT ANSWER
 ========================= */
