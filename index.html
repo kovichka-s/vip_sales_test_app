@@ -75,6 +75,63 @@ border-radius:4px;margin:4px 0;overflow:hidden}
   color:#e2e8f0;
   font-size:1rem;
 }
+ .intro-screen{
+  text-align:center;
+  max-width:920px;
+  margin:0 auto 28px;
+}
+.screening-badge{
+  display:inline-block;
+  color:#93c5fd;
+  border:1px solid #334155;
+  background:rgba(59,130,246,.12);
+  border-radius:999px;
+  padding:6px 14px;
+  font-size:.85rem;
+  margin-bottom:16px;
+}
+.intro-lead{
+  max-width:760px;
+  margin:0 auto 24px;
+  color:#cbd5e1;
+  font-size:1.05rem;
+}
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:22px;
+}
+.info-item{
+  text-align:left;
+  border:1px solid #334155;
+  background:rgba(30,41,59,.65);
+  border-radius:12px;
+  padding:16px;
+}
+.info-item strong{
+  display:block;
+  color:#f8fafc;
+  margin-bottom:8px;
+}
+.info-item span{
+  color:#94a3b8;
+  line-height:1.6;
+  font-size:.92rem;
+}
+.skill-label{
+  display:block;
+  margin-top:14px;
+  color:#cbd5e1;
+  font-weight:600;
+}
+@media (max-width:900px){
+  .info-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+  .info-grid{grid-template-columns:1fr}
+}
+
 .input-field::placeholder{color:#64748b}
 .consent-label{
   display:block;
@@ -94,37 +151,123 @@ border-radius:4px;margin:4px 0;overflow:hidden}
 <body>
 <div class="container">
 <div class="slide active" id="slide-0">
-<h1>Менеджер з продажу VIP-клієнтів</h1>
-<p>Ми шукаємо менеджера з продажу, який буде працювати з нашими
- найціннішими клієнтами. Це не просто продажі — це побудова довгострокових
- партнерських стосунків.</p>
-<div class="note">
-<strong>Ваші основні обов'язки:</strong><br>
-- Розуміти потреби VIP-клієнтів на рівні їхнього бізнесу<br>
-- Розмовляти мовою бізнесу<br>
-- Супроводжувати клієнтів як партнер<br>
-- Глибоко знати продукт та адаптувати під потреби клієнта<br>
-- Забезпечувати результати та вимірювати їх через KPI</div>
-<p>Ми цінуємо в кандидатах: емпатію, професіоналізм,
- бізнес-мислення, готовність адаптувати підхід, орієнтацію на результат.</p>
- Кожна відповідь — правильна. Не потрібно вгадувати, просто оберіть ту, яка найкраще відображає ваш підхід.</p>
-<p>Це не оцінка вашого професіоналізму, а показник того, наскільки ваші методи вирішення завдань збігаються з процесами, які прийняті в нашій команді. 
- Ми шукаємо спеціаліста чиї підходи до роботи максимально синхронізовані з нашими поточними завданнями</p>
-<p><strong>Нижче ви знайдете ситуаційні запитання.</strong>
- <div class="card">
-  <h2>Ваші контактні дані</h2>
+  <div class="intro-screen">
+    <div class="screening-badge">Етап скринінгу</div>
 
-<input class="input-field" id="candidate-name" type="text" placeholder="Ім’я та прізвище" minlength="2" required>
-<input class="input-field" id="candidate-email" type="email" placeholder="Email" required>
-<input class="input-field" id="candidate-phone" type="tel" placeholder="+38 (0__) ___-__-__" inputmode="numeric" maxlength="19" required>
+    <h1>Менеджер з продажу VIP-клієнтів</h1>
 
-  <label class="consent-label">
-    <input type="checkbox" id="privacy-consent">
-    Я надаю згоду на обробку моїх персональних даних
-  </label>
+    <p class="intro-lead">
+      Ви переходите до короткого ситуаційного скринінгу. Він допомагає зрозуміти,
+      наскільки ваш підхід до робочих ситуацій збігається з тим, що зараз потрібно команді.
+    </p>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <strong>12 ситуацій</strong>
+        <span>Ви обиратимете варіант, найближчий до вашого реального підходу.</span>
+      </div>
+
+      <div class="info-item">
+        <strong>Без “правильних” відповідей</strong>
+        <span>Ми не оцінюємо попередній досвід, а стиль мислення і спосіб прийняття рішень.</span>
+      </div>
+
+      <div class="info-item">
+        <strong>Результат одразу</strong>
+        <span>Після проходження ви побачите відсоток відповідності цільовому профілю ролі.</span>
+      </div>
+
+      <div class="info-item">
+        <strong>Наступний крок</strong>
+        <span>За високого збігу ви отримаєте контакти HR та можливість обрати час співбесіди.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Ваші контактні дані</h2>
+
+    <input class="input-field" id="candidate-name" type="text" placeholder="Ім’я та прізвище" minlength="2" required>
+    <input class="input-field" id="candidate-email" type="email" placeholder="Email" required>
+    <input class="input-field" id="candidate-phone" type="tel" placeholder="+38 (0__) ___-__-__" inputmode="numeric" maxlength="19" required>
+
+    <label class="consent-label">
+      <input type="checkbox" id="privacy-consent">
+      Я надаю згоду на обробку моїх персональних даних, щоб компанія могла розглянути мою кандидатуру та зв’язатися зі мною щодо результатів тесту.
+    </label>
+  </div>
+
+  <div class="card">
+    <h2>Інструменти та адаптація</h2>
+
+    <p>
+      Цей блок не впливає на результат тесту. Він потрібен, щоб HR міг підготувати адаптацію та навчання, якщо ми перейдемо до наступного етапу.
+    </p>
+
+    <label class="skill-label">
+      CRM-системи
+      <select class="input-field" id="skill-crm" required>
+        <option value="">Оберіть варіант</option>
+        <option value="confident">Користувався/користувалася регулярно</option>
+        <option value="basic">Користувався/користувалася базово</option>
+        <option value="none">Не користувався/не користувалася</option>
+      </select>
+    </label>
+
+    <label class="skill-label">
+      IP-телефонія або корпоративна телефонія
+      <select class="input-field" id="skill-telephony" required>
+        <option value="">Оберіть варіант</option>
+        <option value="confident">Користувався/користувалася регулярно</option>
+        <option value="basic">Користувався/користувалася частково</option>
+        <option value="none">Не користувався/не користувалася</option>
+      </select>
+    </label>
+
+    <label class="skill-label">
+      Воронка продажів
+      <select class="input-field" id="skill-pipeline" required>
+        <option value="">Оберіть варіант</option>
+        <option value="confident">Розумію етапи та працював/працювала з ними</option>
+        <option value="basic">Знайомий/знайома базово</option>
+        <option value="none">Не працював/не працювала з цим</option>
+      </select>
+    </label>
+
+    <label class="skill-label">
+      Комерційні пропозиції, рахунки або договори
+      <select class="input-field" id="skill-docs" required>
+        <option value="">Оберіть варіант</option>
+        <option value="confident">Готував/готувала або супроводжував/супроводжувала самостійно</option>
+        <option value="basic">Брав/брала участь, але не був/була основною відповідальною особою</option>
+        <option value="none">Не працював/не працювала з цим</option>
+      </select>
+    </label>
+
+    <label class="skill-label">
+      Excel або Google Sheets
+      <select class="input-field" id="skill-sheets" required>
+        <option value="">Оберіть варіант</option>
+        <option value="confident">Користуюся впевнено</option>
+        <option value="basic">Користуюся базово</option>
+        <option value="none">Майже не користуюся</option>
+      </select>
+    </label>
+
+    <label class="skill-label">
+      Ділове листування
+      <select class="input-field" id="skill-emailing" required>
+        <option value="">Оберіть варіант</option>
+        <option value="confident">Регулярно вів/вела робочу переписку</option>
+        <option value="basic">Вів/вела іноді</option>
+        <option value="none">Не було такої задачі</option>
+      </select>
+    </label>
+  </div>
+
+  <button class="btn" onclick="startTest()">Почати тест</button>
 </div>
- <button class="btn" onclick="startTest()">Почати тест</button>
-</div>
+ 
 <div class="slide" id="slide-1">
 <div class="question-number">Ситуація 1 </div>
 <div class="card">
@@ -325,8 +468,18 @@ var currentSlide = 0;
 var archScore = {locom:0, exec:0, diplom:0, manip:0};
 var totalQ = 12;
 var candidateAnswers = {};
-var targetArch = 'diplom';
+onboardingSkills = {
+  crm: crm,
+  telephony: telephony,
+  pipeline: pipeline,
+  commercialDocs: docs,
+  sheets: sheets,
+  businessEmailing: emailing
+};
 
+var targetArch = 'diplom';
+var onboardingSkills = {};
+ 
 /* =========================
    START TEST
 ========================= */
@@ -373,10 +526,16 @@ if (phoneInput){
   var phoneEl = document.getElementById('candidate-phone');
   var consentEl = document.getElementById('privacy-consent');
 
-  var name = nameEl.value.trim();
-  var consent = consentEl.checked;
-  var email = emailEl.value.trim();
-  var phone = phoneEl.value.trim();
+ var name = nameEl.value.trim();
+ var crm = document.getElementById('skill-crm').value;
+ var telephony = document.getElementById('skill-telephony').value;
+ var pipeline = document.getElementById('skill-pipeline').value;
+ var docs = document.getElementById('skill-docs').value;
+ var sheets = document.getElementById('skill-sheets').value;
+ var emailing = document.getElementById('skill-emailing').value;
+ var consent = consentEl.checked;
+ var email = emailEl.value.trim();
+ var phone = phoneEl.value.trim();
 
  var namePattern = /^[A-Za-zА-Яа-яІіЇїЄєҐґ'’\-]+(?:\s+[A-Za-zА-Яа-яІіЇїЄєҐґ'’\-]+){1,2}$/; 
  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -385,11 +544,17 @@ if (phoneInput){
   var oldError = document.getElementById('form-error');
   if (oldError) oldError.remove();
 
-if (!namePattern.test(name) || !emailPattern.test(email) || !phonePattern.test(phone) || !consent){
+if (
+  !namePattern.test(name) ||
+  !emailPattern.test(email) ||
+  !phonePattern.test(phone) ||
+  !crm || !telephony || !pipeline || !docs || !sheets || !emailing ||
+  !consent)
+{
     var error = document.createElement('p');
     error.id = 'form-error';
     error.className = 'form-error';
-    error.textContent = 'Будь ласка, введіть ім’я та прізвище, коректний email, телефон і підтвердіть згоду на обробку персональних даних';
+    error.textContent = 'Будь ласка, заповніть контактні дані, блок інструментів та підтвердіть згоду на обробку персональних даних';
     document.querySelector('#slide-0 .card:last-of-type').appendChild(error);
     return;
   }
@@ -589,10 +754,11 @@ console.log('HR REPORT:', {
     email: document.getElementById('candidate-email').value,
     phone: document.getElementById('candidate-phone').value
   },
-  targetArchetype: targetArch,
-  percentage: percentage,
-  dominantArchetype: maxArch,
-  mismatches: mismatches
+ onboardingSkills: onboardingSkills,
+ targetArchetype: targetArch,
+ percentage: percentage,
+ dominantArchetype: maxArch,
+ mismatches: mismatches
 });
  console.log('RESULT:', {percentage, archScore, status});
 }
