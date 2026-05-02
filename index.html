@@ -163,7 +163,33 @@ border-radius:4px;margin:4px 0;overflow:hidden}
   border-color:#f87171;
   box-shadow:0 0 0 2px rgba(248,113,113,.25);
 }
+.form-row{
+  display:grid;
+  grid-template-columns:180px 1fr;
+  gap:16px;
+  align-items:center;
+  margin:12px 0;
+}
 
+.form-row label{
+  color:#cbd5e1;
+  font-size:.95rem;
+}
+
+.phone-wrap{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.phone-prefix{
+  padding:12px 14px;
+  border:1px solid #334155;
+  border-radius:10px;
+  background:rgba(15,23,42,.9);
+  color:#cbd5e1;
+  font-weight:600;
+}
 </style>
 </head>
 <body>
@@ -207,17 +233,18 @@ border-radius:4px;margin:4px 0;overflow:hidden}
 
     <input class="input-field" id="candidate-name" type="text" placeholder="Ім’я та прізвище" minlength="2" required>
     <input class="input-field" id="candidate-email" type="email" placeholder="Email" required>
- <div class="phone-field">
-  <span class="phone-prefix">+380</span>
-  <input
-    class="input-field phone-input"
-    id="candidate-phone"
-    type="tel"
-    inputmode="numeric"
-    placeholder="971234567"
-    maxlength="9"
-    required
-  >
+<div class="form-row">
+  <label>Телефон</label>
+  <div class="phone-wrap">
+    <span class="phone-prefix">+38</span>
+    <input
+      class="input-field"
+      id="candidate-phone"
+      type="tel"
+      inputmode="numeric"
+      placeholder="0971234567"
+    >
+  </div>
 </div>
 
     <label class="consent-label">
