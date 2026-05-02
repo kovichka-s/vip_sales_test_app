@@ -488,60 +488,47 @@ var onboardingSkills = {};
 /* =========================
    START TEST
 ========================= */
-function formatPhone(value){
+function formatPhone(value) {
   let digits = value.replace(/\D/g, '');
 
-  // якщо вставили 380 або 38 — прибираємо
   if (digits.startsWith('380')) {
     digits = digits.slice(3);
-  } else if (digits.startsWith('38')) {
-    digits = digits.slice(2);
   }
 
-  // завжди номер починається з 0
-  if (!digits.startsWith('0')) {
+  if (digits.length > 0 && digits[0] !== '0') {
     digits = '0' + digits;
   }
 
   digits = digits.slice(0, 10);
 
-  let formatted = '+38 ';
+  let template = '+38 (0__) ___-__-__';
+  let result = '';
+  let digitIndex = 1; // перший 0 уже в шаблоні
 
-  if (digits.length > 0) {
-    formatted += '(' + digits.slice(0, 3);
+  for (let i = 0; i < template.length; i++) {
+    if (template[i] === '_') {
+      result += digits[digitIndex] || '_';
+      digitIndex++;
+    } else {
+      result += template[i];
+    }
   }
 
-  if (digits.length >= 3) {
-    formatted += ') ';
-  }
-
-  if (digits.length > 3) {
-    formatted += digits.slice(3, 6);
-  }
-
-  if (digits.length > 6) {
-    formatted += '-' + digits.slice(6, 8);
-  }
-
-  if (digits.length > 8) {
-    formatted += '-' + digits.slice(8, 10);
-  }
-
-  return formatted;
+  return result;
 }
 
 var phoneInput = document.getElementById('candidate-phone');
 
-if (phoneInput){
-  phoneInput.value = '+38 ';
+if (phoneInput) {
+  phoneInput.value = '+38 (0__) ___-__-__';
 
-  phoneInput.addEventListener('input', function(){
+  phoneInput.addEventListener('input', function () {
     phoneInput.value = formatPhone(phoneInput.value);
   });
 
-  phoneInput.addEventListener('focus', function(){
-    if (!phoneInput.value.startsWith('+38 ')) {
-      phoneInput.value = '+38 ';
+  phoneInput.addEventListener('focus', function () {
+    if (!phoneInput.value) {
+      phoneInput.value = '+38 (0__) ___-__-__';
     }
   });
 }
@@ -585,7 +572,10 @@ if (!emailPattern.test(email)){
   hasError = true;
 }
 
-if (!phonePattern.test(phone)){
+if (phone.includes('_')) {
+  phoneEl.classList.add('error');
+  hasError = true;
+} else if (!phonePattern.test(phone)) {
   phoneEl.classList.add('error');
   hasError = true;
 }
