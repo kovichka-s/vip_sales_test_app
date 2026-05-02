@@ -28,7 +28,20 @@ transition:all .3s}
 background:#3b82f6;color:#fff;border:none;border-radius:10px;
 font-size:1rem;font-weight:600;cursor:pointer;transition:all .3s;margin:16px auto 0}
 .btn:hover{background:#2563eb}
-.btn:disabled{background:#475569;cursor:not-allowed}
+.b.phone-field{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.phone-prefix{
+  color:#cbd5e1;
+  padding:12px 14px;
+  border:1px solid #334155;
+  border-radius:10px;
+  background:rgba(15,23,42,.9);
+  font-weight:600;
+}tn:disabled{background:#475569;cursor:not-allowed}
 
 .slide > .btn{
   position:sticky;
@@ -194,8 +207,18 @@ border-radius:4px;margin:4px 0;overflow:hidden}
 
     <input class="input-field" id="candidate-name" type="text" placeholder="Ім’я та прізвище" minlength="2" required>
     <input class="input-field" id="candidate-email" type="email" placeholder="Email" required>
-  <input class="input-field" id="candidate-phone" type="tel"
-inputmode="numeric" maxlength="18" required>
+ <div class="phone-field">
+  <span class="phone-prefix">+380</span>
+  <input
+    class="input-field phone-input"
+    id="candidate-phone"
+    type="tel"
+    inputmode="numeric"
+    placeholder="971234567"
+    maxlength="9"
+    required
+  >
+</div>
 
     <label class="consent-label">
       <input type="checkbox" id="privacy-consent">
@@ -489,101 +512,11 @@ var onboardingSkills = {};
 /* =========================
    START TEST
 ========================= */
-function formatPhone(value) {
-  let digits = value.replace(/\D/g, '');
 
-  if (digits.startsWith('380')) {
-    digits = digits.slice(3);
-  }
-
-  if (digits.length > 0 && digits[0] !== '0') {
-    digits = '0' + digits;
-  }
-
-  digits = digits.slice(0, 10);
-
-  let template = '+38 (0__) ___-__-__';
-  let result = '';
-  let digitIndex = 1; // перший 0 уже в шаблоні
-
-  for (let i = 0; i < template.length; i++) {
-    if (template[i] === '_') {
-      result += digits[digitIndex] || '_';
-      digitIndex++;
-    } else {
-      result += template[i];
-    }
-  }
-
-  return result;
-}
 
 var phoneInput = document.getElementById('candidate-phone');
 
-function setCursorPosition(pos, el) {
-  setTimeout(() => el.setSelectionRange(pos, pos), 0);
-}
 
-function formatPhone(value) {
-  let digits = value.replace(/\D/g, '');
-
-  if (digits.startsWith('380')) digits = digits.slice(3);
-  if (digits.startsWith('38')) digits = digits.slice(2);
-
-  if (digits.length > 0 && digits[0] !== '0') {
-    digits = '0' + digits;
-  }
-
-  digits = digits.slice(0, 10);
-
-  let template = '+38 (0__) ___-__-__';
-  let result = template;
-  let index = 1; // 0 уже є в шаблоні
-
-  for (let digit of digits.slice(1)) {
-    result = result.replace('_', digit);
-  }
-
-  return result;
-}
-
-if (phoneInput) {
-  phoneInput.value = '+38 (0__) ___-__-__';
-
-  phoneInput.addEventListener('focus', function () {
-    setCursorPosition(7, phoneInput); // після 0
-  });
-
-  phoneInput.addEventListener('click', function () {
-    setCursorPosition(7, phoneInput);
-  });
-
-  phoneInput.addEventListener('input', function () {
-    phoneInput.value = formatPhone(phoneInput.value);
-
-    let nextUnderscore = phoneInput.value.indexOf('_');
-    if (nextUnderscore !== -1) {
-      setCursorPosition(nextUnderscore, phoneInput);
-    }
-  });
-
-  phoneInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Backspace') {
-      e.preventDefault();
-
-      let digits = phoneInput.value.replace(/\D/g, '');
-
-      if (digits.length > 1) {
-        digits = digits.slice(0, -1);
-      }
-
-      phoneInput.value = formatPhone(digits);
-
-      let nextUnderscore = phoneInput.value.indexOf('_');
-      setCursorPosition(nextUnderscore, phoneInput);
-    }
-  });
-}
  
  function startTest(){
   var nameEl = document.getElementById('candidate-name');
@@ -600,11 +533,11 @@ if (phoneInput) {
  var emailing = document.getElementById('skill-emailing').value;
  var consent = consentEl.checked;
  var email = emailEl.value.trim();
- var phone = phoneEl.value.trim();
+var phone = '+380' + phoneEl.value.replace(/\D/g,'');
 
  var namePattern = /^[A-Za-zА-Яа-яІіЇїЄєҐґ'’\-]+(?:\s+[A-Za-zА-Яа-яІіЇїЄєҐґ'’\-]+){1,2}$/; 
  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
- var phonePattern = /^\+38 \(0\d{2}\) \d{3}-\d{2}-\d{2}$/;
+var phonePattern = /^\+380\d{9}$/;
 
   var oldError = document.getElementById('form-error');
   if (oldError) oldError.remove();
