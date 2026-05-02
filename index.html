@@ -491,52 +491,61 @@ var onboardingSkills = {};
 function formatPhone(value){
   let digits = value.replace(/\D/g, '');
 
-  // прибираємо 38 або 380 на початку
+  // якщо вставили 380 або 38 — прибираємо
   if (digits.startsWith('380')) {
     digits = digits.slice(3);
   } else if (digits.startsWith('38')) {
     digits = digits.slice(2);
   }
 
-  // номер має бути 0XXXXXXXXX
-  if (!digits.startsWith('0') && digits.length > 0) {
+  // завжди номер починається з 0
+  if (!digits.startsWith('0')) {
     digits = '0' + digits;
   }
 
   digits = digits.slice(0, 10);
 
-  let result = '+38 ';
+  let formatted = '+38 ';
 
   if (digits.length > 0) {
-    result += '(' + digits.slice(0, 3);
+    formatted += '(' + digits.slice(0, 3);
   }
 
   if (digits.length >= 3) {
-    result += ')';
+    formatted += ') ';
   }
 
   if (digits.length > 3) {
-    result += ' ' + digits.slice(3, 6);
+    formatted += digits.slice(3, 6);
   }
 
   if (digits.length > 6) {
-    result += '-' + digits.slice(6, 8);
+    formatted += '-' + digits.slice(6, 8);
   }
 
   if (digits.length > 8) {
-    result += '-' + digits.slice(8, 10);
+    formatted += '-' + digits.slice(8, 10);
   }
 
-  return result;
+  return formatted;
 }
 
 var phoneInput = document.getElementById('candidate-phone');
 
 if (phoneInput){
+  phoneInput.value = '+38 ';
+
   phoneInput.addEventListener('input', function(){
     phoneInput.value = formatPhone(phoneInput.value);
   });
+
+  phoneInput.addEventListener('focus', function(){
+    if (!phoneInput.value.startsWith('+38 ')) {
+      phoneInput.value = '+38 ';
+    }
+  });
 }
+ 
  function startTest(){
   var nameEl = document.getElementById('candidate-name');
   var emailEl = document.getElementById('candidate-email');
