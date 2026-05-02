@@ -146,6 +146,11 @@ border-radius:4px;margin:4px 0;overflow:hidden}
   margin-top:12px;
   text-align:center;
 }
+ .input-field.error{
+  border-color:#f87171;
+  box-shadow:0 0 0 2px rgba(248,113,113,.25);
+}
+
 </style>
 </head>
 <body>
@@ -486,11 +491,13 @@ var onboardingSkills = {};
 function formatPhone(value){
   var digits = value.replace(/\D/g, '');
 
-  if (digits.startsWith('38')){
+  if (digits.startsWith('380')){
+    digits = digits.slice(3);
+  } else if (digits.startsWith('38')){
     digits = digits.slice(2);
   }
 
-  if (digits.startsWith('0')){
+  if (digits.length > 9 && digits.startsWith('0')){
     digits = digits.slice(1);
   }
 
@@ -543,21 +550,65 @@ if (phoneInput){
 
   var oldError = document.getElementById('form-error');
   if (oldError) oldError.remove();
+document.querySelectorAll('.input-field.error').forEach(function(el){
+  el.classList.remove('error');
+});
 
-if (
-  !namePattern.test(name) ||
-  !emailPattern.test(email) ||
-  !phonePattern.test(phone) ||
-  !crm || !telephony || !pipeline || !docs || !sheets || !emailing ||
-  !consent)
-{
-    var error = document.createElement('p');
-    error.id = 'form-error';
-    error.className = 'form-error';
-    error.textContent = 'Будь ласка, заповніть контактні дані, блок інструментів та підтвердіть згоду на обробку персональних даних';
-    document.querySelector('#slide-0 .card:last-of-type').appendChild(error);
-    return;
-  }
+var hasError = false;
+
+if (!namePattern.test(name)){
+  nameEl.classList.add('error');
+  hasError = true;
+}
+
+if (!emailPattern.test(email)){
+  emailEl.classList.add('error');
+  hasError = true;
+}
+
+if (!phonePattern.test(phone)){
+  phoneEl.classList.add('error');
+  hasError = true;
+}
+
+if (!crm) {
+  document.getElementById('skill-crm').classList.add('error');
+  hasError = true;
+}
+
+if (!telephony) {
+  document.getElementById('skill-telephony').classList.add('error');
+  hasError = true;
+}
+
+if (!pipeline) {
+  document.getElementById('skill-pipeline').classList.add('error');
+  hasError = true;
+}
+
+if (!docs) {
+  document.getElementById('skill-docs').classList.add('error');
+  hasError = true;
+}
+
+if (!sheets) {
+  document.getElementById('skill-sheets').classList.add('error');
+  hasError = true;
+}
+
+if (!emailing) {
+  document.getElementById('skill-emailing').classList.add('error');
+  hasError = true;
+}
+
+if (hasError || !consent){
+  var error = document.createElement('p');
+  error.id = 'form-error';
+  error.className = 'form-error';
+  error.textContent = 'Будь ласка, перевірте поля, підсвічені червоним, та підтвердіть згоду на обробку персональних даних.';
+  document.querySelector('#slide-0 .card:last-of-type').appendChild(error);
+  return;
+}
 
 currentSlide = 1;
 archScore = {locom:0, exec:0, diplom:0, manip:0};
