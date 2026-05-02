@@ -194,7 +194,8 @@ border-radius:4px;margin:4px 0;overflow:hidden}
 
     <input class="input-field" id="candidate-name" type="text" placeholder="Ім’я та прізвище" minlength="2" required>
     <input class="input-field" id="candidate-email" type="email" placeholder="Email" required>
-    <input class="input-field" id="candidate-phone" type="tel" placeholder="+38 (0__) ___-__-__" inputmode="numeric" maxlength="19" required>
+  <input class="input-field" id="candidate-phone" type="tel"
+inputmode="numeric" maxlength="18" required>
 
     <label class="consent-label">
       <input type="checkbox" id="privacy-consent">
@@ -519,16 +520,67 @@ function formatPhone(value) {
 
 var phoneInput = document.getElementById('candidate-phone');
 
+function setCursorPosition(pos, el) {
+  setTimeout(() => el.setSelectionRange(pos, pos), 0);
+}
+
+function formatPhone(value) {
+  let digits = value.replace(/\D/g, '');
+
+  if (digits.startsWith('380')) digits = digits.slice(3);
+  if (digits.startsWith('38')) digits = digits.slice(2);
+
+  if (digits.length > 0 && digits[0] !== '0') {
+    digits = '0' + digits;
+  }
+
+  digits = digits.slice(0, 10);
+
+  let template = '+38 (0__) ___-__-__';
+  let result = template;
+  let index = 1; // 0 уже є в шаблоні
+
+  for (let digit of digits.slice(1)) {
+    result = result.replace('_', digit);
+  }
+
+  return result;
+}
+
 if (phoneInput) {
   phoneInput.value = '+38 (0__) ___-__-__';
 
-  phoneInput.addEventListener('input', function () {
-    phoneInput.value = formatPhone(phoneInput.value);
+  phoneInput.addEventListener('focus', function () {
+    setCursorPosition(7, phoneInput); // після 0
   });
 
-  phoneInput.addEventListener('focus', function () {
-    if (!phoneInput.value) {
-      phoneInput.value = '+38 (0__) ___-__-__';
+  phoneInput.addEventListener('click', function () {
+    setCursorPosition(7, phoneInput);
+  });
+
+  phoneInput.addEventListener('input', function () {
+    phoneInput.value = formatPhone(phoneInput.value);
+
+    let nextUnderscore = phoneInput.value.indexOf('_');
+    if (nextUnderscore !== -1) {
+      setCursorPosition(nextUnderscore, phoneInput);
+    }
+  });
+
+  phoneInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Backspace') {
+      e.preventDefault();
+
+      let digits = phoneInput.value.replace(/\D/g, '');
+
+      if (digits.length > 1) {
+        digits = digits.slice(0, -1);
+      }
+
+      phoneInput.value = formatPhone(digits);
+
+      let nextUnderscore = phoneInput.value.indexOf('_');
+      setCursorPosition(nextUnderscore, phoneInput);
     }
   });
 }
