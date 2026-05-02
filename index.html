@@ -489,33 +489,43 @@ var onboardingSkills = {};
    START TEST
 ========================= */
 function formatPhone(value){
-  var digits = value.replace(/\D/g, '');
+  let digits = value.replace(/\D/g, '');
 
-  if (digits.startsWith('380')){
+  // прибираємо 38 або 380 на початку
+  if (digits.startsWith('380')) {
     digits = digits.slice(3);
-  } else if (digits.startsWith('38')){
+  } else if (digits.startsWith('38')) {
     digits = digits.slice(2);
   }
 
-  if (digits.length > 9 && digits.startsWith('0')){
-    digits = digits.slice(1);
+  // номер має бути 0XXXXXXXXX
+  if (!digits.startsWith('0') && digits.length > 0) {
+    digits = '0' + digits;
   }
 
-  digits = digits.slice(0, 9);
+  digits = digits.slice(0, 10);
 
-  var p1 = digits.slice(0, 2);
-  var p2 = digits.slice(2, 5);
-  var p3 = digits.slice(5, 7);
-  var p4 = digits.slice(7, 9);
+  let result = '+38 ';
 
-  var result = '+38 (0';
+  if (digits.length > 0) {
+    result += '(' + digits.slice(0, 3);
+  }
 
-  if (p1) result += p1;
-  result += ')';
+  if (digits.length >= 3) {
+    result += ')';
+  }
 
-  if (p2) result += ' ' + p2;
-  if (p3) result += '-' + p3;
-  if (p4) result += '-' + p4;
+  if (digits.length > 3) {
+    result += ' ' + digits.slice(3, 6);
+  }
+
+  if (digits.length > 6) {
+    result += '-' + digits.slice(6, 8);
+  }
+
+  if (digits.length > 8) {
+    result += '-' + digits.slice(8, 10);
+  }
 
   return result;
 }
