@@ -77,7 +77,8 @@ border-radius:4px;margin:4px 0;overflow:hidden}
 .bar-exec{background:#f59e0b}
 .bar-manip{background:#f43f5e}
 .bar-diplom{background:#22c55e}
-.input-field{
+
+ .input-field{
   display:block;
   width:100%;
   padding:12px 16px;
@@ -87,6 +88,7 @@ border-radius:4px;margin:4px 0;overflow:hidden}
   border-radius:10px;
   color:#e2e8f0;
   font-size:1rem;
+  letter-spacing: 0.5px;
 }
  .intro-screen{
   text-align:center;
@@ -197,6 +199,18 @@ border-radius:4px;margin:4px 0;overflow:hidden}
 .form-row label{
   font-weight:600;
 }
+.input-field:focus{
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.25);
+  background: rgba(30,41,59,.95);
+}
+
+.input-field::placeholder{
+  opacity: 0.6;
+}
+  
+ 
 </style>
 </head>
 <body>
@@ -571,11 +585,8 @@ var onboardingSkills = {};
    START TEST
 ========================= */
 
-
 var phoneInput = document.getElementById('candidate-phone');
 
-
- 
  function startTest(){
   var nameEl = document.getElementById('candidate-name');
   var emailEl = document.getElementById('candidate-email');
@@ -591,16 +602,17 @@ var phoneInput = document.getElementById('candidate-phone');
  var emailing = document.getElementById('skill-emailing').value;
  var consent = consentEl.checked;
  var email = emailEl.value.trim();
-var phone = '+380' + phoneEl.value.replace(/\D/g,'');
+ var phoneDigits = phoneEl.value.replace(/\D/g,'');
+ var phone = '+38' + phoneDigits;
 
  var namePattern = /^[A-Za-zА-Яа-яІіЇїЄєҐґ'’\-]+(?:\s+[A-Za-zА-Яа-яІіЇїЄєҐґ'’\-]+){1,2}$/; 
  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-var phonePattern = /^\+380\d{9}$/;
+ var phonePattern = /^\+380\d{10}$/;
 
   var oldError = document.getElementById('form-error');
   if (oldError) oldError.remove();
-document.querySelectorAll('.input-field.error').forEach(function(el){
-  el.classList.remove('error');
+document.querySelectorAll('.input-field.error').forEach(function(el)
+{  el.classList.remove('error');
 });
 
 var hasError = false;
@@ -658,7 +670,7 @@ if (hasError || !consent){
   error.id = 'form-error';
   error.className = 'form-error';
   error.textContent = 'Будь ласка, перевірте поля, підсвічені червоним, та підтвердіть згоду на обробку персональних даних.';
-  document.querySelector('#slide-0 .card:last-of-type').appendChild(error);
+  document.querySelector('#slide-0').appendChild(error);
   return;
 }
 
