@@ -682,7 +682,7 @@ if (hasError || !consent) {
   error.textContent =
     'Будь ласка, перевірте поля, підсвічені червоним, та підтвердіть згоду на обробку персональних даних.';
 
-document.getElementById('consent-wrap').after(error);
+document.querySelector('.slide.active .btn').after(error);
   return;
 }
   
