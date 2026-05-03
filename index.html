@@ -247,7 +247,15 @@ select.input-field.has-value{
   background: #1e293b;
   color: #cbd5e1;
 }
-  
+  #form-error {
+  position: sticky;
+  bottom: 58px;
+  z-index: 10;
+  background: rgba(15, 23, 42, 0.95);
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-align: center;
+}
 </style>
 
 </head>
@@ -687,7 +695,7 @@ if (hasError || !consent) {
   error.textContent =
     'Будь ласка, перевірте поля, підсвічені червоним, та підтвердіть згоду на обробку персональних даних.';
 
-document.querySelector('.slide.active .btn').after(error);
+document.querySelector('.slide.active .btn').before(error);
   return;
 }
   
