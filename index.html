@@ -148,7 +148,16 @@ border-radius:4px;margin:4px 0;overflow:hidden}
 }
 
 .input-field::placeholder{color:#64748b}
-.consent-label{
+select.input-field option[value=""]{
+  color:#64748b;
+}
+select.input-field{
+  color:#64748b;
+}
+select.input-field:valid, select.input-field.has-value{
+  color:#e2e8f0;
+}
+ .consent-label{
   display:block;
   margin-top:14px;
   color:#cbd5e1;
