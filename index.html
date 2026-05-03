@@ -639,6 +639,15 @@ if (!emailing) {
 }
 
 if (hasError || !consent){
+ onboardingSkills = 
+ {
+  crm: crm,
+  telephony: telephony,
+  pipeline: pipeline,
+  commercialDocs: docs,
+  sheets: sheets,
+  businessEmailing: emailing
+};
   var error = document.createElement('p');
   error.id = 'form-error';
   error.className = 'form-error';
