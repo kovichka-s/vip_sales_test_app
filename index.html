@@ -578,7 +578,7 @@ var phoneInput = document.getElementById('candidate-phone');
 
  var namePattern = /^[A-Za-zА-Яа-яІіЇїЄєҐґ'’\-]+(?:\s+[A-Za-zА-Яа-яІіЇїЄєҐґ'’\-]+){1,2}$/; 
  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
- var phonePattern = /^\+380\d{10}$/;
+ var phonePattern = /^0\d{9}$/;
 
   var oldError = document.getElementById('form-error');
   if (oldError) oldError.remove();
@@ -598,10 +598,12 @@ if (!emailPattern.test(email)){
   hasError = true;
 }
 
-if (phone.includes('_')) {
+if (phone.includes('_'))
+{
   phoneEl.classList.add('error');
   hasError = true;
-} else if (!phonePattern.test(phone)) {
+} 
+else if (!phonePattern.test(phoneDigits)) {
   phoneEl.classList.add('error');
   hasError = true;
 }
