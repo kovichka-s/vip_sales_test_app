@@ -281,7 +281,6 @@ select.input-field.has-value{
       </div>
     </div>
   </div>
-</div>
   <div class="card">
 
  <h2 style="text-align:center">Ваші контактні дані</h2>
@@ -683,7 +682,7 @@ if (hasError || !consent) {
   error.textContent =
     'Будь ласка, перевірте поля, підсвічені червоним, та підтвердіть згоду на обробку персональних даних.';
 
-  document.querySelector('#slide-0').appendChild(error);
+  document.querySelector('#slide-0 .intro-screen').appendChild(error);
   return;
 }
   
