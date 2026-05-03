@@ -667,24 +667,18 @@ if (!emailing) {
   hasError = true;
 }
 
-if (hasError || !consent){
- onboardingSkills = 
- {
-  crm: crm,
-  telephony: telephony,
-  pipeline: pipeline,
-  commercialDocs: docs,
-  sheets: sheets,
-  businessEmailing: emailing
-};
+if (hasError || !consent) {
+
   var error = document.createElement('p');
   error.id = 'form-error';
   error.className = 'form-error';
-  error.textContent = 'Будь ласка, перевірте поля, підсвічені червоним, та підтвердіть згоду на обробку персональних даних.';
+  error.textContent =
+    'Будь ласка, перевірте поля, підсвічені червоним, та підтвердіть згоду на обробку персональних даних.';
+
   document.querySelector('#slide-0').appendChild(error);
   return;
 }
-
+  
 currentSlide = 1;
 archScore = {locom:0, exec:0, diplom:0, manip:0};
 candidateAnswers = {};
@@ -843,8 +837,8 @@ if (hrDebugReport){
   reportHtml += '<p><strong>Цільовий профіль:</strong> ' + archNames[targetArch] + '</p>';
   reportHtml += '<p><strong>Результат:</strong> ' + percentage + '%</p>';
   reportHtml += '<p><strong>Домінантний стиль кандидата:</strong> ' + archNames[maxArch] + '</p>';
-<h4>Hard skills кандидата</h4>
-<pre>${JSON.stringify(onboardingSkills, null, 2)}</pre>
+reportHtml += '<h4>Hard skills кандидата</h4>';
+reportHtml += '<pre>' + JSON.stringify(onboardingSkills, null, 2) + '</pre>';
   reportHtml += '<p><strong>Розподіл відповідей:</strong><br>' +
     'Локомотив: ' + archScore.locom + '<br>' +
     'Виконавець: ' + archScore.exec + '<br>' +
