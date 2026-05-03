@@ -897,5 +897,9 @@ console.log('HR REPORT:', {
 });
  console.log('RESULT:', {percentage, archScore, status});
 }
-
+document.getElementById('privacy-consent').addEventListener('change', function() {
+  if (this.checked) {
+    document.getElementById('consent-wrap').classList.remove('error');
+  }
+});
 </script>
