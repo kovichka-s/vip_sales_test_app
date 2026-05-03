@@ -238,7 +238,11 @@ select.input-field{
 select.input-field.has-value{
   color:#e2e8f0;
 }
-  
+  .consent-label.error {
+  color: #f87171;
+  text-decoration: underline;
+  text-decoration-color: #f87171;
+}
  
 </style>
 </head>
@@ -300,10 +304,10 @@ select.input-field.has-value{
     </div>
   </div>
 
-  <label class="consent-label">
-    <input type="checkbox" id="privacy-consent">
-    Я надаю згоду на обробку моїх персональних даних
-  </label>
+  <label id="consent-wrap" class="consent-label">
+  <input type="checkbox" id="privacy-consent">
+  <span class="consent-text">Я даю згоду на обробку персональних даних</span>
+</label>
 
 </div>
 
@@ -668,6 +672,10 @@ if (!emailing) {
 }
 
 if (hasError || !consent) {
+
+  if (!consent) {
+    document.getElementById('consent-wrap').classList.add('error');
+  }
 
   var error = document.createElement('p');
   error.id = 'form-error';
