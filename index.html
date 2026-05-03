@@ -190,6 +190,13 @@ border-radius:4px;margin:4px 0;overflow:hidden}
   color:#cbd5e1;
   font-weight:600;
 }
+ .form-row .input-field{
+  margin:0;
+}
+
+.form-row label{
+  font-weight:600;
+}
 </style>
 </head>
 <body>
@@ -231,10 +238,31 @@ border-radius:4px;margin:4px 0;overflow:hidden}
   <div class="card">
     <h2>Ваші контактні дані</h2>
 
-    <input class="input-field" id="candidate-name" type="text" placeholder="Ім’я та прізвище" minlength="2" required>
-    <input class="input-field" id="candidate-email" type="email" placeholder="Email" required>
+    <div class="form-row">
+  <label for="candidate-name">Ім’я та прізвище</label>
+  <input
+    class="input-field"
+    id="candidate-name"
+    type="text"
+    placeholder="Введіть ім’я та прізвище"
+    minlength="2"
+    required
+  >
+</div>
+
 <div class="form-row">
-  <label>Телефон</label>
+  <label for="candidate-email">E-mail</label>
+  <input
+    class="input-field"
+    id="candidate-email"
+    type="email"
+    placeholder="example@gmail.com"
+    required
+  >
+</div>
+
+<div class="form-row">
+  <label for="candidate-phone">Телефон</label>
   <div class="phone-wrap">
     <span class="phone-prefix">+38</span>
     <input
@@ -243,8 +271,11 @@ border-radius:4px;margin:4px 0;overflow:hidden}
       type="tel"
       inputmode="numeric"
       placeholder="0971234567"
+      maxlength="10"
+      required
     >
   </div>
+</div>
 </div>
 
     <label class="consent-label">
