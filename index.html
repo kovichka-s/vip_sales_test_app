@@ -865,7 +865,7 @@ if (hrDebugReport){
   reportHtml += '<p><strong>Цільовий профіль:</strong> ' + archNames[targetArch] + '</p>';
   reportHtml += '<p><strong>Результат:</strong> ' + percentage + '%</p>';
   reportHtml += '<p><strong>Домінантний стиль кандидата:</strong> ' + archNames[maxArch] + '</p>';
-reportHtml += '<h4>Hard skills кандидата</h4>';
+
 function skillLabel(value){
   if (value === 'confident') return 'Впевнене володіння';
   if (value === 'basic') return 'Базовий рівень / потребує адаптації';
@@ -874,6 +874,10 @@ function skillLabel(value){
 }
 
 reportHtml +=
+  '<h4>Контакти кандидата</h4>' +
+  '<p><strong>Імʼя та прізвище:</strong> ' + document.getElementById('candidate-name').value + '</p>' +
+  '<p><strong>Email:</strong> ' + document.getElementById('candidate-email').value + '</p>' +
+  '<p><strong>Телефон:</strong> +38 ' + document.getElementById('candidate-phone').value + '</p>';
   '<h4>Готовність до онбордингу</h4>' +
   '<p><strong>CRM:</strong> ' + skillLabel(onboardingSkills.crm) + '</p>' +
   '<p><strong>Телефонія:</strong> ' + skillLabel(onboardingSkills.telephony) + '</p>' +
