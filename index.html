@@ -809,9 +809,16 @@ var percentage = Math.round((archScore[targetArch] / totalQ) * 100);
     return archScore[b] - archScore[a];
   });
 
-var topArch = sortedArch[0];
-var secondArch = sortedArch[1];
-var thirdArch = sortedArch[2];
+var maxCount = Math.max(
+  archScore.locom,
+  archScore.exec,
+  archScore.diplom,
+  archScore.manip
+);
+
+var topArches = Object.keys(archScore).filter(function(key){
+  return archScore[key] === maxCount;
+});
  
 var sortedArch = Object.keys(archScore)
   .sort(function(a, b){
@@ -893,7 +900,9 @@ if (textEl) textEl.innerHTML =
   '<p style="font-size:28px;font-weight:800;margin-top:12px;">На жаль, ви не підходите</p>' +
 
   '<p>Ваш стиль прийняття рішень і взаємодії відрізняється від того, який потрібен саме для цієї ролі в цій компанії</p>';
-var desc = styleDescriptions[topArch];
+var descList = topArches.map(function(key){
+  return styleDescriptions[key];
+});
 
 if (desc && textEl){
   textEl.innerHTML +=
