@@ -949,9 +949,10 @@ if (textEl){
   // 50/50 або просто кілька топів
   if (topArches.length > 1){
 
-    var combinedText = topArches.map(function(key){
-      return styleDescriptions[key].text;
-    }).join(' ');
+ var combinedText = (topArches || [])
+  .map(k => styleDescriptions?.[k]?.text ?? '')
+  .filter(Boolean)
+  .join(' ');
 
     textEl.innerHTML +=
       '<div style="margin-top:20px;padding:16px;border:1px solid #334155;border-radius:12px;background:rgba(51,65,85,.4)">' +
