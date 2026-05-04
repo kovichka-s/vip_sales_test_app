@@ -804,7 +804,7 @@ var percentage = Math.round((archScore[targetArch] / totalQ) * 100);
       maxArch = key;
     }
   }
- var sortedArch = Object.keys(archScore)
+var sortedArch = Object.keys(archScore)
   .sort(function(a, b){
     return archScore[b] - archScore[a];
   });
@@ -819,11 +819,6 @@ var maxCount = Math.max(
 var topArches = Object.keys(archScore).filter(function(key){
   return archScore[key] === maxCount;
 });
- 
-var sortedArch = Object.keys(archScore)
-  .sort(function(a, b){
-    return archScore[b] - archScore[a];
-  });
 
 var top3 = sortedArch.slice(0, 3);
  var styleDescriptions = {
