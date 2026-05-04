@@ -819,7 +819,7 @@ var maxCount = Math.max(
 var topArches = Object.keys(archScore).filter(function(key){
   return archScore[key] === maxCount;
 });
-
+var is50_50 = (topArches.length === 2);
 var top3 = sortedArch.slice(0, 3);
 // =========================
 // 50/50 COMBO DETECTION
