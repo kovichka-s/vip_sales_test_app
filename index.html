@@ -259,6 +259,7 @@ select.input-field.has-value{
 #hr-debug-report {
   display: none;
 }
+
   
 </style>
 
@@ -582,8 +583,6 @@ select.input-field.has-value{
   <div class="card result-box">
     <h2 class="result-title" id="result-title">Ваш результат</h2>
 
-    <div class="result-percent" id="result-percent">0%</div>
-
     <p class="result-text" id="result-text"></p>
 <div class="arch-box" id="hr-debug-report"></div>
     <div class="arch-box hidden" id="arch-box">
@@ -785,15 +784,15 @@ function showResult(){
 var percentage = Math.round((archScore[targetArch] / totalQ) * 100);
 
   // 4. DOM елементи
-  var percentEl = document.getElementById('result-percent');
+  
   var titleEl = document.getElementById('result-title');
   var textEl = document.getElementById('result-text');
   var archBox = document.getElementById('arch-box');
   var archStats = document.getElementById('arch-stats');
  var hrDebugReport = document.getElementById('hr-debug-report');
 
-  // 5. safety check (щоб не було “порожньо”)
-  if (percentEl) percentEl.textContent = percentage + '%';
+
+  
 
   // 6. архетип
   var maxArch = '';
@@ -846,8 +845,7 @@ if (textEl) textEl.innerHTML =
 
   '<p>Рівень відповідності:</p>' +
 
-  '<div style="font-size:48px;font-weight:700;color:#3b82f6;margin:8px 0;">' +
-  percentage + '%</div>' +
+ '<div class="result-percent">' + percentage + '%</div>' +
 
   '<p style="font-size:14px;opacity:.8;">Необхідний мінімум: 70%</p>' +
 
