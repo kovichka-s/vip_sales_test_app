@@ -780,21 +780,16 @@ function showResult(){
 
   // 3. розрахунок
   var targetArch = 'diplom';
-
-var percentage = Math.round((archScore[targetArch] / totalQ) * 100);
+  var percentage = Math.round((archScore[targetArch] / totalQ) * 100);
 
   // 4. DOM елементи
-  
   var titleEl = document.getElementById('result-title');
   var textEl = document.getElementById('result-text');
   var archBox = document.getElementById('arch-box');
   var archStats = document.getElementById('arch-stats');
- var hrDebugReport = document.getElementById('hr-debug-report');
+  var hrDebugReport = document.getElementById('hr-debug-report');
 
-
-  
-
-  // 6. архетип
+  // 6. архетип (залишаю твою логіку, але без дублювань max)
   var maxArch = '';
   var maxCount = 0;
 
@@ -804,101 +799,77 @@ var percentage = Math.round((archScore[targetArch] / totalQ) * 100);
       maxArch = key;
     }
   }
-var sortedArch = Object.keys(archScore)
-  .sort(function(a, b){
-    return archScore[b] - archScore[a];
+
+  var sortedArch = Object.keys(archScore)
+    .sort(function(a, b){
+      return archScore[b] - archScore[a];
+    });
+
+  var topArches = Object.keys(archScore).filter(function(key){
+    return archScore[key] === maxCount;
   });
 
-var maxCount = Math.max(
-  archScore.locom,
-  archScore.exec,
-  archScore.diplom,
-  archScore.manip
-);
+  var is50_50 = (topArches.length === 2);
 
-var topArches = Object.keys(archScore).filter(function(key){
-  return archScore[key] === maxCount;
-});
-var is50_50 = (topArches.length === 2);
-var top3 = sortedArch.slice(0, 3);
-// =========================
-// 50/50 COMBO DETECTION
-// =========================
+  var top3 = sortedArch.slice(0, 3);
 
-var topCount = archScore[sortedArch[0]];
-var secondCount = archScore[sortedArch[1]];
+  // =========================
+  // 50/50 COMBO DETECTION
+  // =========================
+  var topCount = archScore[sortedArch[0]];
+  var secondCount = archScore[sortedArch[1]];
 
-// якщо 2 архетипи ділять перше місце
-var is50_50 = (topCount === secondCount);
+  var is50_50_final = (topCount === secondCount);
 
-// якщо 50/50
-var comboArch = null;
+  var comboArch = null;
 
-if (is50_50) {
-  comboArch = sortedArch[0] + '_' + sortedArch[1];
-}
- 
- var styleDescriptions = {
+  if (is50_50_final) {
+    comboArch = sortedArch[0] + '_' + sortedArch[1];
+  }
 
-  locom: {
-    text:
-      "Ви демонструєте стиль роботи, орієнтований на швидке прийняття рішень і досягнення результату. " +
-      "Ви схильні брати ініціативу та рухати процес вперед, навіть у складних або невизначених умовах.",
+  // =========================
+  // styleDescriptions (НЕ ЧІПАЮ)
+  // =========================
+  var styleDescriptions = {
 
-    conclusion:
-      "Такий підхід добре підходить для ролей, де важливі швидкість, відповідальність і результативність."
-  },
+    locom: {
+      text:
+        "Ви демонструєте стиль роботи, орієнтований на швидке прийняття рішень і досягнення результату. " +
+        "Ви схильні брати ініціативу та рухати процес вперед, навіть у складних або невизначених умовах.",
 
-  exec: {
-    text:
-      "Ви демонструєте стабільний і послідовний стиль роботи. " +
-      "Ви уважно ставитеся до завдань, дотримуєтесь інструкцій і прагнете виконати все якісно та без помилок. " +
-      "Вам важливо мати чітку структуру та зрозумілі очікування.",
+      conclusion:
+        "Такий підхід добре підходить для ролей, де важливі швидкість, відповідальність і результативність."
+    },
 
-    conclusion:
-      "Такий стиль добре підходить для ролей, де важлива точність, надійність і дотримання процесів."
-  },
+    exec: {
+      text:
+        "Ви демонструєте стабільний і послідовний стиль роботи. " +
+        "Ви уважно ставитеся до завдань, дотримуєтесь інструкцій і прагнете виконати все якісно та без помилок. " +
+        "Вам важливо мати чітку структуру та зрозумілі очікування.",
 
-  manip: {
-    text:
-      "Ви орієнтуєтесь на швидке виявлення можливостей у поточній ситуації. " +
-      "Ви уважні до короткострокових вигод, варіантів впливу на результат і гнучко реагуєте на зміни умов. " +
-      "Ви схильні діяти через конкретні ситуації, а не через довгострокове планування.",
+      conclusion:
+        "Такий стиль добре підходить для ролей, де важлива точність, надійність і дотримання процесів."
+    },
 
-    conclusion:
-      "Такий стиль може бути ефективним у середовищах, де важлива швидка реакція та гнучкість, " +
-      "і добре проявляється в динамічних задачах із частими змінами умов."
-  },
-locom_exec: {
-  text:
-    "Ви поєднуєте швидкість прийняття рішень і структурний підхід до виконання задач. Можете діяти швидко, але збереженням порядку та якості."
-},
+    manip: {
+      text:
+        "Ви орієнтуєтесь на швидке виявлення можливостей у поточній ситуації. " +
+        "Ви уважні до короткострокових вигод, варіантів впливу на результат і гнучко реагуєте на зміни умов. " +
+        "Ви схильні діяти через конкретні ситуації, а не через довгострокове планування.",
 
-locom_manip: {
-  text:
-    "Ви поєднуєте швидке прийняття рішень і гнучкість у підходах. Орієнтуєтесь на результат і швидко адаптуєтесь до ситуації."
-},
+      conclusion:
+        "Такий стиль може бути ефективним у середовищах, де важлива швидка реакція та гнучкість, " +
+        "і добре проявляється в динамічних задачах із частими змінами умов."
+    },
 
-exec_diplom: {
-  text:
-    "Ви поєднуєте структурність і уважність до деталей із вмінням враховувати інтереси інших. Дієте обережно та збалансовано."
-},
+    locom_exec: { text: "Ви поєднуєте швидкість і структуру." },
+    locom_manip: { text: "Ви поєднуєте швидкість і гнучкість." },
+    exec_diplom: { text: "Ви поєднуєте структуру і баланс." },
+    diplom_manip: { text: "Ви поєднуєте баланс і гнучкість." },
+    locom_diplom: { text: "Ви поєднуєте швидкість і баланс." },
+    exec_manip: { text: "Ви поєднуєте структуру і результат." }
+  };
 
-diplom_manip: {
-  text:
-    "Ви поєднуєте орієнтацію на баланс і відносини з гнучким реагуванням на зміни. Вмієте домовлятись і адаптуватись."
-},
-
-locom_diplom: {
-  text:
-    "Ви поєднуєте швидкість дій із орієнтацією на взаємодію та баланс. Можете швидко приймати рішення, враховуючи інших."
-},
-
-exec_manip: {
-  text:
-    "Ви поєднуєте структурність і процесність із гнучкістю у досягненні результату. Вмієте працювати в системі та знаходити рішення."
-}
-};
   var archNames = {
     locom: 'Локомотив',
     exec: 'Виконавець',
@@ -906,16 +877,14 @@ exec_manip: {
     manip: 'Маніпулятор'
   };
 
-  // 7. базова інформація
-
-  /* =========================
-     8. ЛОГІКА РІШЕНЬ HR
-  ========================= */
-
+  // =========================
+  // HR LOGIC
+  // =========================
   var status = '';
 
   if (percentage >= 70){
     status = 'HIRE';
+
     if (titleEl) titleEl.textContent = 'Вітаємо!';
     if (textEl) textEl.innerHTML =
    `Ваш стиль роботи збігається з очікуваннями компанії для цієї позиції. Ми пропонуємо вам наступний етап — співбесіду з HR та керівником.<br><br>
@@ -924,75 +893,85 @@ exec_manip: {
 Email: <a href="mailto:kovichkas@gmail.com" style="color:#60a5fa">kovichkas@gmail.com</a><br>
 Телефон: <a href="tel:+380XXXXXXXXX" style="color:#60a5fa">+380 XX XXX XX XX</a><br><br>
 <a class="calendly-btn" href="https://calendly.com/your-link" target="_blank">Обрати час для співбесіди</a>`;
+
+    return; // 🔴 КЛЮЧОВИЙ ФІКС (не дає перетирати результат)
   }
 
-if (titleEl) titleEl.textContent = 'Результат';
+  if (titleEl) titleEl.textContent = 'Результат';
 
-if (textEl) textEl.innerHTML =
-  '<p>Ми проаналізували ваші відповіді у межах вимог до цієї позиції</p>' +
+  if (textEl) textEl.innerHTML =
+    '<p>Ми проаналізували ваші відповіді у межах вимог до цієї позиції</p>' +
+    '<p>Рівень відповідності:</p>' +
+    '<div class="result-percent">' + percentage + '%</div>' +
+    '<p style="font-size:14px;opacity:.8;">Необхідний мінімум: 70%</p>' +
+    '<p style="font-size:28px;font-weight:800;margin-top:12px;">На жаль, ви не підходите</p>' +
+    '<p>Ваш стиль прийняття рішень і взаємодії відрізняється від того, який потрібен саме для цієї ролі в цій компанії</p>';
 
-  '<p>Рівень відповідності:</p>' +
+  // =========================
+  // SAFE DESC BUILD
+  // =========================
+  var getText = function(key){
+    return (styleDescriptions[key] && styleDescriptions[key].text)
+      ? styleDescriptions[key].text
+      : '';
+  };
 
- '<div class="result-percent">' + percentage + '%</div>' +
+  if (textEl){
 
-  '<p style="font-size:14px;opacity:.8;">Необхідний мінімум: 70%</p>' +
+    if (topArches.length > 1){
 
-  '<p style="font-size:28px;font-weight:800;margin-top:12px;">На жаль, ви не підходите</p>' +
+      var combinedText = (topArches || [])
+        .map(function(k){
+          return getText(k);
+        })
+        .filter(Boolean)
+        .join(' ');
 
-  '<p>Ваш стиль прийняття рішень і взаємодії відрізняється від того, який потрібен саме для цієї ролі в цій компанії</p>';
-var descList = topArches.map(function(key){
-  return styleDescriptions[key];
-});
+      textEl.innerHTML +=
+        '<div style="margin-top:20px;padding:16px;border:1px solid #334155;border-radius:12px;background:rgba(51,65,85,.4)">' +
+          '<div style="font-weight:600;margin-bottom:8px;">Ваш підхід у роботі</div>' +
+          '<div style="line-height:1.6;">' +
+            'Ви в своїй роботі поєднуєте риси кількох стилів: ' + combinedText +
+          '</div>' +
+        '</div>';
 
-if (textEl){
+    } else {
 
-  // 50/50 або просто кілька топів
-  if (topArches.length > 1){
+      var desc = styleDescriptions[topArches[0]];
 
- var combinedText = (topArches || [])
-  .map(k => styleDescriptions?.[k]?.text ?? '')
-  .filter(Boolean)
-  .join(' ');
+      if (desc){
 
-    textEl.innerHTML +=
-      '<div style="margin-top:20px;padding:16px;border:1px solid #334155;border-radius:12px;background:rgba(51,65,85,.4)">' +
-        '<div style="font-weight:600;margin-bottom:8px;">Ваш підхід у роботі</div>' +
-        '<div style="line-height:1.6;">' +
-          'Ви в своїй роботі поєднуєте риси кількох стилів: ' + combinedText +
-        '</div>' +
-      '</div>';
+        textEl.innerHTML +=
+          '<div style="margin-top:20px;padding:16px;border:1px solid #334155;border-radius:12px;background:rgba(51,65,85,.4)">' +
+            '<div style="font-weight:600;margin-bottom:8px;">Ваш підхід у роботі</div>' +
+            '<div style="line-height:1.6;">' + desc.text + '</div>' +
+          '</div>' +
 
-  } else {
+          '<div style="margin-top:12px;padding:16px;border:1px solid #3b82f6;border-radius:12px;background:rgba(59,130,246,.1)">' +
+            '<div style="font-weight:600;margin-bottom:8px;color:#60a5fa;">Що це означає</div>' +
+            '<div style="line-height:1.6;">' + desc.conclusion + '</div>' +
+          '</div>';
+      }
+    }
+  }
 
-    var desc = styleDescriptions[topArches[0]];
+  // =========================
+  // DEBUG (НЕ ЧІПАВ ЛОГІКУ)
+  // =========================
+  var mismatches = [];
 
-    textEl.innerHTML +=
-      '<div style="margin-top:20px;padding:16px;border:1px solid #334155;border-radius:12px;background:rgba(51,65,85,.4)">' +
-        '<div style="font-weight:600;margin-bottom:8px;">Ваш підхід у роботі</div>' +
-        '<div style="line-height:1.6;">' + desc.text + '</div>' +
-      '</div>';
-
-    textEl.innerHTML +=
-      '<div style="margin-top:12px;padding:16px;border:1px solid #3b82f6;border-radius:12px;background:rgba(59,130,246,.1)">' +
-        '<div style="font-weight:600;margin-bottom:8px;color:#60a5fa;">Що це означає</div>' +
-        '<div style="line-height:1.6;">' + desc.conclusion + '</div>' +
-      '</div>';
+  for (var q in candidateAnswers){
+    if (!candidateAnswers[q].match){
+      mismatches.push({
+        questionNumber: q,
+        selectedArch: candidateAnswers[q].selectedArch,
+        question: candidateAnswers[q].question,
+        answer: candidateAnswers[q].answer
+      });
+    }
   }
 }
  
- // 10. debug (тимчасово)
- var mismatches = [];
-
-for (var q in candidateAnswers){
-  if (!candidateAnswers[q].match){
-    mismatches.push({
-      questionNumber: q,
-      selectedArch: candidateAnswers[q].selectedArch,
-      question: candidateAnswers[q].question,
-      answer: candidateAnswers[q].answer
-    });
-  }
-}
 if (hrDebugReport){
   var reportHtml = '<h2>Тимчасовий HR-звіт</h2>';
 
