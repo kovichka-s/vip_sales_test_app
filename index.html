@@ -893,7 +893,23 @@ if (textEl) textEl.innerHTML =
   '<p style="font-size:28px;font-weight:800;margin-top:12px;">На жаль, ви не підходите</p>' +
 
   '<p>Ваш стиль прийняття рішень і взаємодії відрізняється від того, який потрібен саме для цієї ролі в цій компанії</p>';
+var desc = styleDescriptions[topArch];
 
+if (desc && textEl){
+  textEl.innerHTML +=
+
+    // БЛОК 1 — опис (text)
+    '<div style="margin-top:20px;padding:16px;border:1px solid #334155;border-radius:12px;background:rgba(51,65,85,.4)">' +
+      '<div style="font-weight:600;margin-bottom:8px;">Ваш підхід у роботі</div>' +
+      '<div style="line-height:1.6;">' + desc.text + '</div>' +
+    '</div>' +
+
+    // БЛОК 2 — окремо conclusion
+    '<div style="margin-top:12px;padding:16px;border:1px solid #3b82f6;border-radius:12px;background:rgba(59,130,246,.1)">' +
+      '<div style="font-weight:600;margin-bottom:8px;color:#60a5fa;">Що це означає</div>' +
+      '<div style="line-height:1.6;">' + desc.conclusion + '</div>' +
+    '</div>';
+}
  
  // 10. debug (тимчасово)
  var mismatches = [];
