@@ -839,20 +839,21 @@ Email: <a href="mailto:kovichkas@gmail.com" style="color:#60a5fa">kovichkas@gmai
 <a class="calendly-btn" href="https://calendly.com/your-link" target="_blank">Обрати час для співбесіди</a>`;
   }
 
-  else {
-  status = 'NO_MATCH';
+if (titleEl) titleEl.textContent = 'На жаль, ви не підходите';
 
-  if (titleEl) titleEl.textContent = 'На жаль, ви не підходите';
+if (textEl) textEl.innerHTML =
+  '<p>Ми проаналізували ваші відповіді у межах вимог до цієї позиції.</p>' +
 
-  if (textEl) textEl.innerHTML =
-    'Ми проаналізували ваші відповіді у межах вимог цієї позиції.<br><br>' +
+  '<p>Рівень відповідності:</p>' +
 
-    'Рівень відповідності: <strong>' + percentage + '%</strong> (необхідний мінімум — 70%).<br><br>' +
+  '<div style="font-size:48px;font-weight:700;color:#3b82f6;margin:8px 0;">' +
+  percentage + '%</div>' +
 
-    'Ваш результат означає, що стиль прийняття рішень та взаємодії суттєво відрізняється від того, що потрібно для цієї ролі.<br>' +
+  '<p style="font-size:14px;opacity:.8;">Необхідний мінімум: 70%</p>' +
 
-    'Саме тому цей профіль не відповідає вимогам позиції.';
-}
+  '<p>На жаль, ви не підходите.</p>' +
+
+  '<p>Ваш стиль прийняття рішень і взаємодії відрізняється від того, який потрібен саме для цієї ролі в цій компанії.</p>';
 
   // 10. debug (тимчасово)
  var mismatches = [];
