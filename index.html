@@ -821,6 +821,23 @@ var topArches = Object.keys(archScore).filter(function(key){
 });
 
 var top3 = sortedArch.slice(0, 3);
+// =========================
+// 50/50 COMBO DETECTION
+// =========================
+
+var topCount = archScore[sortedArch[0]];
+var secondCount = archScore[sortedArch[1]];
+
+// якщо 2 архетипи ділять перше місце
+var is50_50 = (topCount === secondCount);
+
+// якщо 50/50
+var comboArch = null;
+
+if (is50_50) {
+  comboArch = sortedArch[0] + '_' + sortedArch[1];
+}
+ 
  var styleDescriptions = {
 
   locom: {
