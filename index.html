@@ -801,7 +801,13 @@ var percentage = Math.round((archScore[targetArch] / totalQ) * 100);
       maxArch = key;
     }
   }
+var sortedArch = Object.keys(archScore)
+  .sort(function(a, b){
+    return archScore[b] - archScore[a];
+  });
 
+var top3 = sortedArch.slice(0, 3);
+ 
   var archNames = {
     locom: 'Локомотив',
     exec: 'Виконавець',
@@ -829,22 +835,22 @@ Email: <a href="mailto:kovichkas@gmail.com" style="color:#60a5fa">kovichkas@gmai
 <a class="calendly-btn" href="https://calendly.com/your-link" target="_blank">Обрати час для співбесіди</a>`;
   }
 
-  else if (percentage >= 50){
-    status = 'POTENTIAL';
-    if (titleEl) titleEl.textContent = 'Потенційний кандидат';
-    if (textEl) textEl.textContent =
-      'Часткове співпадіння. Ваш результат відображає відсоток відповідності вашого стилю роботи вимогам компанії саме для цієї ролі';
-  }
-
   else {
-    status = 'NO_MATCH';
-    if (titleEl) titleEl.textContent = 'На жаль, ви не підходите';
-    if (textEl) textEl.textContent =
-      'Ваш результат відображає відсоток відповідності вашого стилю роботи вимогам компанії саме для цієї ролі';
-  }
+  status = 'NO_MATCH';
 
-  // 9. показ архетипу
+  if (titleEl) titleEl.textContent = 'Результат отримано';
 
+  if (textEl) textEl.innerHTML =
+    'Ваш стиль взаємодії проаналізовано в межах цієї ролі компанії.<br><br>' +
+
+    'В межах цієї вакансії найбільше проявилися такі поведінкові патерни:<br>' +
+    '<strong>1.</strong> ' + archNames[top3[0]] + '<br>' +
+    '<strong>2.</strong> ' + archNames[top3[1]] + '<br>' +
+    '<strong>3.</strong> ' + archNames[top3[2]] + '<br><br>' +
+
+    'Ця позиція вимагає іншого балансу рішень і взаємодії в команді та з клієнтами<br>' +
+    'Саме тому цей профіль не є оптимальним для поточної ролі.';
+}
 
   // 10. debug (тимчасово)
  var mismatches = [];
