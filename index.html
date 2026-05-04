@@ -877,14 +877,15 @@ reportHtml +=
   '<h4>Контакти кандидата</h4>' +
   '<p><strong>Імʼя та прізвище:</strong> ' + document.getElementById('candidate-name').value + '</p>' +
   '<p><strong>Email:</strong> ' + document.getElementById('candidate-email').value + '</p>' +
-  '<p><strong>Телефон:</strong> +38 ' + document.getElementById('candidate-phone').value + '</p>';
+  '<p><strong>Телефон:</strong> +38 ' + document.getElementById('candidate-phone').value + '</p>' +
+
   '<h4>Готовність до онбордингу</h4>' +
   '<p><strong>CRM:</strong> ' + skillLabel(onboardingSkills.crm) + '</p>' +
   '<p><strong>Телефонія:</strong> ' + skillLabel(onboardingSkills.telephony) + '</p>' +
-  '<p><strong>Робота з pipeline:</strong> ' + skillLabel(onboardingSkills.pipeline) + '</p>' +
+  '<p><strong>Pipeline:</strong> ' + skillLabel(onboardingSkills.pipeline) + '</p>' +
   '<p><strong>Комерційні документи:</strong> ' + skillLabel(onboardingSkills.commercialDocs) + '</p>' +
   '<p><strong>Google Sheets:</strong> ' + skillLabel(onboardingSkills.sheets) + '</p>' +
-  '<p><strong>Business emailing:</strong> ' + skillLabel(onboardingSkills.businessEmailing) + '</p>';
+  '<p><strong>Emailing:</strong> ' + skillLabel(onboardingSkills.businessEmailing) + '</p>';
   reportHtml += '<p><strong>Розподіл відповідей:</strong><br>' +
     'Локомотив: ' + archScore.locom + '<br>' +
     'Виконавець: ' + archScore.exec + '<br>' +
@@ -908,19 +909,21 @@ reportHtml +=
 
   hrDebugReport.innerHTML = reportHtml;
 }
- 
-console.log('HR REPORT:', {
-  candidate: {
+ fetch("YOUR_MAKE_WEBHOOK_URL", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    percentage,
+    archScore,
+    onboardingSkills,
+    candidateAnswers,
     name: document.getElementById('candidate-name').value,
     email: document.getElementById('candidate-email').value,
     phone: document.getElementById('candidate-phone').value
-  },
- onboardingSkills: onboardingSkills,
- targetArchetype: targetArch,
- percentage: percentage,
- dominantArchetype: maxArch,
- mismatches: mismatches
+  })
 });
+console.log('HR REPORT:', reportData);
+ 
  console.log('RESULT:', {percentage, archScore, status});
 }
 document.getElementById('privacy-consent').addEventListener('change', function() {
