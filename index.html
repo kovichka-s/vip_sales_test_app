@@ -904,20 +904,39 @@ var descList = topArches.map(function(key){
   return styleDescriptions[key];
 });
 
-if (desc && textEl){
-  textEl.innerHTML +=
+if (textEl){
 
-    // БЛОК 1 — опис (text)
-    '<div style="margin-top:20px;padding:16px;border:1px solid #334155;border-radius:12px;background:rgba(51,65,85,.4)">' +
-      '<div style="font-weight:600;margin-bottom:8px;">Ваш підхід у роботі</div>' +
-      '<div style="line-height:1.6;">' + desc.text + '</div>' +
-    '</div>' +
+  // 50/50 або просто кілька топів
+  if (topArches.length > 1){
 
-    // БЛОК 2 — окремо conclusion
-    '<div style="margin-top:12px;padding:16px;border:1px solid #3b82f6;border-radius:12px;background:rgba(59,130,246,.1)">' +
-      '<div style="font-weight:600;margin-bottom:8px;color:#60a5fa;">Що це означає</div>' +
-      '<div style="line-height:1.6;">' + desc.conclusion + '</div>' +
-    '</div>';
+    var combinedText = topArches.map(function(key){
+      return styleDescriptions[key].text;
+    }).join(' ');
+
+    textEl.innerHTML +=
+      '<div style="margin-top:20px;padding:16px;border:1px solid #334155;border-radius:12px;background:rgba(51,65,85,.4)">' +
+        '<div style="font-weight:600;margin-bottom:8px;">Ваш підхід у роботі</div>' +
+        '<div style="line-height:1.6;">' +
+          'Ви в своїй роботі поєднуєте риси кількох стилів: ' + combinedText +
+        '</div>' +
+      '</div>';
+
+  } else {
+
+    var desc = styleDescriptions[topArches[0]];
+
+    textEl.innerHTML +=
+      '<div style="margin-top:20px;padding:16px;border:1px solid #334155;border-radius:12px;background:rgba(51,65,85,.4)">' +
+        '<div style="font-weight:600;margin-bottom:8px;">Ваш підхід у роботі</div>' +
+        '<div style="line-height:1.6;">' + desc.text + '</div>' +
+      '</div>';
+
+    textEl.innerHTML +=
+      '<div style="margin-top:12px;padding:16px;border:1px solid #3b82f6;border-radius:12px;background:rgba(59,130,246,.1)">' +
+        '<div style="font-weight:600;margin-bottom:8px;color:#60a5fa;">Що це означає</div>' +
+        '<div style="line-height:1.6;">' + desc.conclusion + '</div>' +
+      '</div>';
+  }
 }
  
  // 10. debug (тимчасово)
