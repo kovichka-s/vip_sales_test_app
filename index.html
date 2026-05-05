@@ -894,7 +894,7 @@ Email: <a href="mailto:kovichkas@gmail.com" style="color:#60a5fa">kovichkas@gmai
 Телефон: <a href="tel:+380XXXXXXXXX" style="color:#60a5fa">+380 XX XXX XX XX</a><br><br>
 <a class="calendly-btn" href="https://calendly.com/your-link" target="_blank">Обрати час для співбесіди</a>`;
 
-    return; // 🔴 КЛЮЧОВИЙ ФІКС (не дає перетирати результат)
+ 
   }
 
   if (titleEl) titleEl.textContent = 'Результат';
@@ -970,9 +970,9 @@ Email: <a href="mailto:kovichkas@gmail.com" style="color:#60a5fa">kovichkas@gmai
       });
     }
   }
-}
- 
 if (hrDebugReport){
+}
+
   var reportHtml = '<h2>Тимчасовий HR-звіт</h2>';
 
   reportHtml += '<p><strong>Цільовий профіль:</strong> ' + archNames[targetArch] + '</p>';
@@ -1021,7 +1021,7 @@ reportHtml +=
   }
 
   hrDebugReport.innerHTML = reportHtml;
-}
+
  fetch("YOUR_MAKE_WEBHOOK_URL", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
@@ -1035,8 +1035,8 @@ reportHtml +=
     phone: document.getElementById('candidate-phone').value
   })
 });
+ }
  
-}
 document.getElementById('privacy-consent').addEventListener('change', function() {
   if (this.checked) {
     document.getElementById('consent-wrap').classList.remove('error');
