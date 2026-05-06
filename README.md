@@ -70,7 +70,7 @@ Hard skills пришвидшують виконання роботи, але н�
 
 ![Прев’ю результату](assets/report-preview.png)
 
-[Відкрити приклад HR-звіту у PDF](assets/hr-report-example.png)
+[Відкрити приклад HR-звіту](assets/hr-report-example.png)
 
 ## Гнучкість профілю
 
