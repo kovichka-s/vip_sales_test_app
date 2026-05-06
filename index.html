@@ -886,9 +886,15 @@ function showResult(){
     status = 'HIRE';
 
     if (titleEl) titleEl.textContent = 'Вітаємо!';
-   <div class="result-percent">${percentage}%</div>
-   if (textEl) textEl.innerHTML =
-   `Ваш стиль роботи збігається з очікуваннями компанії для цієї позиції. Ми пропонуємо вам наступний етап — співбесіду з HR та керівником<br><br>
+    if (textEl) textEl.innerHTML =
+   `<p>Ми проаналізували ваші відповіді у межах вимог до цієї позиції</p>
+    <p>Рівень відповідності:</p>
+    <div class="result-percent">${percentage}%</div>
+
+    <p style="margin-top:16px;">
+    Ваш стиль роботи збігається з очікуваннями компанії для цієї позиції.
+    Ми пропонуємо вам наступний етап — співбесіду з HR та керівником.
+    </p>
 <strong>Наступний крок:</strong><br>
 Ви можете написати HR-менеджеру для узгодження деталей або самостійно обрати зручний час у календарі<br><br>
 Email: <a href="mailto:kovichkas@gmail.com" style="color:#60a5fa">kovichkas@gmail.com</a><br>
