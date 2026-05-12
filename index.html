@@ -887,14 +887,33 @@ diplom: {
   // =========================
   // HR LOGIC
   // =========================
-  var status = '';
+// =========================
+// HR LOGIC
+// =========================
 
-  if (percentage >= 70){
-    status = 'HIRE';
+var status = '';
+var dominantArch = sortedArch[0];
+var dominantCount = archScore[dominantArch];
 
-    if (titleEl) titleEl.textContent = 'Вітаємо!';
-    if (textEl) textEl.innerHTML =
-   `<p>Ми проаналізували ваші відповіді у межах вимог до цієї позиції</p>
+var secondArch = sortedArch[1];
+var secondCount = archScore[secondArch];
+
+// -----------------------------------
+// 1. HIRE
+// 9+ відповідей дипломата
+// -----------------------------------
+
+if (
+  dominantArch === 'diplom' &&
+  dominantCount >= 9
+){
+
+  status = 'HIRE';
+
+  if (titleEl) titleEl.textContent = 'Вітаємо!';
+
+  if (textEl) textEl.innerHTML =
+    `<p>Ми проаналізували ваші відповіді у межах вимог до цієї позиції</p>
     <p>Рівень відповідності:</p>
     <div class="result-percent">${percentage}%</div>
 
@@ -902,25 +921,140 @@ diplom: {
     Ваш стиль роботи збігається з очікуваннями компанії для цієї позиції.
     Ми пропонуємо вам наступний етап — співбесіду з HR та керівником.
     </p>
-<strong>Наступний крок:</strong><br>
-Ви можете написати HR-менеджеру для узгодження деталей або самостійно обрати зручний час у календарі<br><br>
-Email: <a href="mailto:kovichkas@gmail.com" style="color:#60a5fa">kovichkas@gmail.com</a><br>
-Телефон: <a href="tel:+380XXXXXXXXX" style="color:#60a5fa">+380 XX XXX XX XX</a><br><br>
-<a class="calendly-btn" href="https://calendly.com/your-link" target="_blank">Обрати час для співбесіди</a>`;
 
- 
-  }else {
+    <strong>Наступний крок:</strong><br>
+    Ви можете написати HR-менеджеру для узгодження деталей або самостійно обрати зручний час у календарі<br><br>
+
+    Email:
+    <a href="mailto:kovichkas@gmail.com" style="color:#60a5fa">
+      kovichkas@gmail.com
+    </a><br>
+
+    Телефон:
+    <a href="tel:+380XXXXXXXXX" style="color:#60a5fa">
+      +380 XX XXX XX XX
+    </a><br><br>
+
+    <a class="calendly-btn"
+       href="https://calendly.com/your-link"
+       target="_blank">
+       Обрати час для співбесіди
+    </a>`;
+}
+
+// -----------------------------------
+// 2. POTENTIAL DIPLOMAT
+// 7-8 відповідей дипломата
+// -----------------------------------
+
+else if (
+  dominantArch === 'diplom' &&
+  dominantCount >= 7
+){
+
+  status = 'POTENTIAL_DIPLOMAT';
 
   if (titleEl) titleEl.textContent = 'Результат';
 
   if (textEl) textEl.innerHTML =
     '<p>Ми проаналізували ваші відповіді у межах вимог до цієї позиції</p>' +
+
     '<p>Рівень відповідності:</p>' +
+
     '<div class="result-percent">' + percentage + '%</div>' +
+
     '<p style="font-size:14px;opacity:.8;">Необхідний мінімум: 70%</p>' +
-    '<p style="font-size:28px;font-weight:800;margin-top:12px;">На жаль, ви не підходите</p>' +
-    '<p>Ваш стиль прийняття рішень і взаємодії відрізняється від того, який потрібен саме для цієї ролі в цій компанії</p>';
+
+    '<p style="margin-top:16px;">' +
+    'У ваших відповідях помітна схильність до дипломатичного стилю взаємодії, ' +
+    'однак стиль прийняття рішень ще не демонструє достатньо стабільної моделі ' +
+    'для цієї ролі.' +
+    '</p>';
 }
+
+// -----------------------------------
+// 3. 50 / 50
+// -----------------------------------
+
+else if (
+  dominantCount === 6 &&
+  secondCount === 6
+){
+
+  status = 'DUAL_ARCHETYPE';
+
+  if (titleEl) titleEl.textContent = 'Результат';
+
+  if (textEl) textEl.innerHTML =
+    '<p>Ми проаналізували ваші відповіді у межах вимог до цієї позиції</p>' +
+
+    '<p>Рівень відповідності:</p>' +
+
+    '<div class="result-percent">' + percentage + '%</div>' +
+
+    '<p style="font-size:14px;opacity:.8;">Необхідний мінімум: 70%</p>' +
+
+    '<p style="margin-top:16px;">' +
+    'У ваших відповідях поєднуються два виражені стилі поведінки. ' +
+    'Це свідчить про гнучкий підхід до взаємодії та прийняття рішень залежно від ситуації.' +
+    '</p>';
+}
+
+// -----------------------------------
+// 4. OTHER DOMINANT ARCHETYPE
+// -----------------------------------
+
+else if (
+  dominantArch !== 'diplom' &&
+  dominantCount >= 7
+){
+
+  status = 'OTHER_ARCHETYPE';
+
+  if (titleEl) titleEl.textContent = 'Результат';
+
+  if (textEl) textEl.innerHTML =
+    '<p>Ми проаналізували ваші відповіді у межах вимог до цієї позиції</p>' +
+
+    '<p>Рівень відповідності:</p>' +
+
+    '<div class="result-percent">' + percentage + '%</div>' +
+
+    '<p style="font-size:14px;opacity:.8;">Необхідний мінімум: 70%</p>' +
+
+    '<p style="margin-top:16px;">' +
+    'У ваших відповідях чітко проявляється домінантний стиль: <strong>' +
+    archNames[dominantArch] +
+    '</strong>. ' +
+    'Ваш підхід до взаємодії та прийняття рішень відрізняється від стилю, який є пріоритетним для цієї ролі.' +
+    '</p>';
+}
+
+// -----------------------------------
+// 5. MIX / RANDOM
+// -----------------------------------
+
+else {
+
+  status = 'NOT_MATCH';
+
+  if (titleEl) titleEl.textContent = 'Результат';
+
+  if (textEl) textEl.innerHTML =
+    '<p>Ми проаналізували ваші відповіді у межах вимог до цієї позиції</p>' +
+
+    '<p>Рівень відповідності:</p>' +
+
+    '<div class="result-percent">' + percentage + '%</div>' +
+
+    '<p style="font-size:14px;opacity:.8;">Необхідний мінімум: 70%</p>' +
+
+    '<p style="font-size:28px;font-weight:800;margin-top:12px;">' +
+    'На жаль, ви не підходите' +
+    '</p>';
+}
+
+ 
   // =========================
   // SAFE DESC BUILD
   // =========================
@@ -984,8 +1118,7 @@ Email: <a href="mailto:kovichkas@gmail.com" style="color:#60a5fa">kovichkas@gmai
       });
     }
   }
-if (hrDebugReport){
-}
+if (hrDebugReport){}
 
   var reportHtml = '<h2>Тимчасовий HR-звіт</h2>';
 
