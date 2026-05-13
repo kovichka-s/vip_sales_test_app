@@ -1071,31 +1071,32 @@ else {
             'Ви в своїй роботі поєднуєте риси кількох стилів: ' + combinedText +
           '</div>' +
         '</div>';
+    } 
+    
+    else {
 
-    } else {
+  var desc = styleDescriptions[topArches[0]];
 
-      var desc = styleDescriptions[topArches[0]];
+  if (desc){
 
-     if (desc){
-
-  // основний опис — показуємо всім
-  textEl.innerHTML +=
-    '<div style="margin-top:20px;padding:16px;border:1px solid #334155;border-radius:12px;background:rgba(51,65,85,.4)">' +
-      '<div style="font-weight:600;margin-bottom:8px;">Ваш підхід у роботі</div>' +
-      '<div style="line-height:1.6;">' + desc.text + '</div>' +
-    '</div>';
-
-  // пояснення — НЕ показуємо для HIRE
-  if (status !== 'HIRE') {
-
+    // основний опис — показуємо всім
     textEl.innerHTML +=
-      '<div style="margin-top:12px;padding:16px;border:1px solid #3b82f6;border-radius:12px;background:rgba(59,130,246,.1)">' +
-        '<div style="font-weight:600;margin-bottom:8px;color:#60a5fa;">Що це означає</div>' +
-        '<div style="line-height:1.6;">' + desc.conclusion + '</div>' +
+      '<div style="margin-top:20px;padding:16px;border:1px solid #334155;border-radius:12px;background:rgba(51,65,85,.4)">' +
+        '<div style="font-weight:600;margin-bottom:8px;">Ваш підхід у роботі</div>' +
+        '<div style="line-height:1.6;">' + desc.text + '</div>' +
       '</div>';
+
+    // пояснення — показуємо тільки для OTHER_ARCHETYPE
+    if (status === 'OTHER_ARCHETYPE') {
+
+      textEl.innerHTML +=
+        '<div style="margin-top:12px;padding:16px;border:1px solid #3b82f6;border-radius:12px;background:rgba(59,130,246,.1)">' +
+          '<div style="font-weight:600;margin-bottom:8px;color:#60a5fa;">Що це означає</div>' +
+          '<div style="line-height:1.6;">' + desc.conclusion + '</div>' +
+        '</div>';
+    }
   }
 }
-  }
 
   // =========================
   // DEBUG (НЕ ЧІПАВ ЛОГІКУ)
