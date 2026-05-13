@@ -1053,9 +1053,9 @@ else {
       : '';
   };
 
-  if (textEl){
+  if (textEl && status !== 'NOT_MATCH'){
 
-    if (topArches.length > 1){
+  if (topArches.length > 1 && status === 'DUAL_ARCHETYPE'){
 
       var combinedText = (topArches || [])
         .map(function(k){
