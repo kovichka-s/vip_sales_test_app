@@ -5,7 +5,7 @@
 ## 🔗 Live demo
 
 Інтерактивний HR‑тест для відбору VIP‑менеджерів з продажу:
-👉 [Пройти тест](https://kovichka-s.github.io/vip_sales_test_app/test.html)
+👉 [Пройти тест](https://kovichka-s.github.io/vip_sales_test_app/)
 
 ## Ідея проєкту
 
